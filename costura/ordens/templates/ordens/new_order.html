@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h1 style="color: white;">Criar Nova Ordem</h1>
+<div class="card">
+    <form method='post'>
+        {% csrf_token %}
+        {{form}}
+        <button type="submit">Salvar</button>
+    </form>
+</div>
+
+<script>
+    function updateValue() {
+        var select = document.getElementById("servico");
+        var valorInput = document.getElementById("valor");
+        
+        var selectedOption = select.options[select.selectedIndex];
+        var valor = selectedOption.getAttribute("data-valor");
+        
+        valorInput.value = valor;
+        updateTotal();
+    }
+    
+    function updateTotal() {
+        var valor = parseFloat(document.getElementById("valor").value);
+        var quantidade = parseInt(document.getElementById("quantidade").value);
+        var valorTotal = valor * quantidade;
+        
+        document.getElementById("valor_total").value = valorTotal.toFixed(2);
+    }
+</script>
+
+{% endblock %}

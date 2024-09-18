@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static "css/styles.css" %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <title>OS System</title>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>OS System</h2>
+        <ul>
+            <li><a href="/"><i class="fas fa-home"></i>Dashboard</a></li>
+            <li><a href="{% url "ordens:ordens" %}"><i class="fas fa-clipboard-list"></i>Ordens de Serviço</a></li>
+            <li><a href="{% url "servicos:servicos" %}"><i class="fas fa-wrench"></i>Cadastrar Serviço/Alterar Valor</a></li>
+        </ul>
+    </div>
+    <div class="main-content">
+        <div class="top-bar"></div>
+        <div class="content">
+            {% block content %}
+            {% endblock content%}
+        </div>
+    </div>
+</body>
+</html>

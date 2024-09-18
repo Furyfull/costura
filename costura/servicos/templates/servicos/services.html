@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h1>Cadastrar Serviço/Alterar Valor</h1>
+<div class="card-list">
+    {% for service in services %}
+    <div class="card">
+        <h2>Serviço: {{ service.nome }}</h2>
+        <p>Valor: {{ service.valor }}</p>
+        <!-- Botões para alterar ou apagar o serviço -->
+    </div>
+    {% endfor %}
+</div>
+<div class="card">
+    <form method="post">
+
+        {% csrf_token %}
+        {{form}}
+
+        <button type="submit">Cadastrar Serviço</button> 
+    </form>
+</div>
+{% endblock %}
