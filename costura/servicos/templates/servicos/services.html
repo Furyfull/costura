@@ -1,23 +1,30 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<h1>Cadastrar Serviço/Alterar Valor</h1>
-<div class="card-list">
-    {% for service in services %}
-    <div class="card">
-        <h2>Serviço: {{ service.nome }}</h2>
-        <p>Valor: {{ service.valor }}</p>
-        <!-- Botões para alterar ou apagar o serviço -->
+    <h1>Cadastrar Serviço/Alterar Valor</h1>
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    <div class="card-list">
+        {% for service in services %}
+        <div class="card">
+            <h2>Serviço: {{ service.nome }}</h2>
+            <p>Valor: {{ service.valor }}</p>
+            <!-- Botões para alterar ou apagar o serviço -->
+        </div>
+        {% endfor %}
     </div>
-    {% endfor %}
-</div>
-<div class="card">
-    <form method="post">
+    <div class="card">
+        <form action="{% url "servicos:servicos" %}" method="post">
 
-        {% csrf_token %}
-        {{form}}
+            {% csrf_token %}
+            {{form}}
 
-        <button type="submit">Cadastrar Serviço</button> 
-    </form>
-</div>
+            <button type="submit">Cadastrar Serviço</button> 
+        </form>
+    </div>
 {% endblock %}

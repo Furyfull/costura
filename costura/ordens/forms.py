@@ -5,7 +5,7 @@ class new_ordem(forms.ModelForm):
     class Meta:
         model = Ordem
         fields = '__all__'
-
+        
         widgets = {
             'data_pedido':forms.DateTimeInput(attrs={'type':'datetime-local'}),
             'data_entrega':forms.DateTimeInput(attrs={'type':'datetime-local'}),

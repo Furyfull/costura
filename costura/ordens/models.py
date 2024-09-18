@@ -1,5 +1,7 @@
 from django.db import models
 from django.core.validators import MinValueValidator
+from servicos.models import servicos
+
 
 
 COSTUREIRA={
@@ -11,7 +13,7 @@ COSTUREIRA={
 # Create your models here.
 class Ordem(models.Model):
     cliente = models.CharField(max_length=100)
-    servico = models.CharField(max_length=100)
+    servico = models.ForeignKey(servicos, on_delete=models.CASCADE)
     costureira = models.CharField(max_length=10, choices=COSTUREIRA)
     descricao = models.TextField(max_length= 160)
     data_pedido = models.DateTimeField(auto_now_add=False)
