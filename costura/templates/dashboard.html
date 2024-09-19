@@ -5,10 +5,10 @@
 <button id="reloadButton">Recarregar Dados</button>
 <iframe id="streamlitFrame" src="http://localhost:8501" width="100%" height="800px" style="border:none;"></iframe>
 
-<script>
+{% comment %} <script>
     document.getElementById('reloadButton').addEventListener('click', function() {
         // Recarregar o iframe do Streamlit
         document.getElementById('streamlitFrame').src += '';
     });
-</script>
+</script> {% endcomment %}
 {% endblock %}

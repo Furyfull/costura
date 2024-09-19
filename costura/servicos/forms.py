@@ -9,3 +9,8 @@ class new_service(forms.ModelForm):
         widgets = {
                 'valor':forms.NumberInput(attrs={'min':'0', 'value': '0.00'}),
             }
+        
+class update_service(forms.ModelForm):
+    class Meta:
+        model = servicos
+        fields = '__all__' 

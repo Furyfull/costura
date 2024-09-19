@@ -10,12 +10,12 @@
             </ul>
         {% endif %}
     <div class="card-list">
-        {% for service in services %}
-        <div class="card">
-            <h2>Serviço: {{ service.nome }}</h2>
-            <p>Valor: {{ service.valor }}</p>
-            <!-- Botões para alterar ou apagar o serviço -->
-        </div>
+        {% for service in servicos %}
+            <div class="card">
+                <h2>Serviço: {{ service.nome }}</h2>
+                <p>Valor: {{ service.valor }}</p>
+                <a href="{% url "servicos:alterar" service.id %}">Alterar</a>
+            </div>
         {% endfor %}
     </div>
     <div class="card">

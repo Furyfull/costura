@@ -5,6 +5,6 @@ app_name= 'servicos'
 
 urlpatterns = [
     path('', views.services, name='servicos'),
-    path('resposta/', views.resposta_views, name='resposta'),
+    path('alterar/<str:pk>/', views.update_services, name='alterar'),
 ]
  
