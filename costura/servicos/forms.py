@@ -1,16 +1,12 @@
 from django import forms
-from .models import servicos
+from . import models
 
 class new_service(forms.ModelForm):
     class Meta:
-        model = servicos
-        fields = '__all__'
+        model = models.servicos
+        fields = ['nome','valor']
 
         widgets = {
                 'valor':forms.NumberInput(attrs={'min':'0', 'value': '0.00'}),
             }
         
-class update_service(forms.ModelForm):
-    class Meta:
-        model = servicos
-        fields = '__all__' 

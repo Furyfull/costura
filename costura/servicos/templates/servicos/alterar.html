@@ -1,14 +1,14 @@
 {% extends "layout.html" %}
 
 {% block content %}
-    <h1>Alterar Valor</h1>
+    <h1>Alterar Serviço: {{post.nome}}</h1>
     <div class="card">
-        <form action="{% url "servicos:servicos" %}" method="POST">
+        <form action="." method="POST">
 
             {% csrf_token %}
             {{ form }}
 
-            <button type="submit">Alterar Serviço</button> 
+            <input type="submit" value='Alterar'>
         </form>
     </div>
 {% endblock %}

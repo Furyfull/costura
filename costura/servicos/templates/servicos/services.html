@@ -19,7 +19,7 @@
         {% endfor %}
     </div>
     <div class="card">
-        <form action="{% url "servicos:servicos" %}" method="post">
+        <form action="." method="post">
 
             {% csrf_token %}
             {{form}}
