@@ -49,6 +49,10 @@ body {
     flex: 1;
 }
 
+.content {
+    padding: 0 2% 0 2%;
+}
+
 h1 {
     color: #fff;
 }
@@ -118,4 +122,36 @@ h1 {
 
 .create-button:hover {
     background-color: #ff5a20;
+}
+
+.options-2 {
+    display: flex;
+    gap: 1rem;
+    margin-left: 1rem;
+}
+
+.btn-z {
+    width: 70px;
+    display: inline-block;
+    font-size: 1.2rem;
+    font-weight: bold;
+
+    color: white;
+    text-decoration: none;
+    background: #24B345;
+    cursor: pointer;
+
+    box-sizing: content-box;
+    border: 1px solid green;
+    padding: 8px 10px;
+    margin: 5px 4px 10px 0;
+
+    vertical-align: middle;
+    text-align: center;
+
+
+    &[type='submit'] {
+        background: red;
+        border: 1px solid rgb(128, 4, 0);
+    }
 }

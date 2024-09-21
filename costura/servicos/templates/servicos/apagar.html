@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block content %}
+        <h1>Deletar Serviço?</h1>
+        <h2>
+            <ul>
+                <li>{{post.nome}}</li>
+                <li>R$ {{post.valor}}</li>
+                <li>{{post.id}}</li>
+            </ul>
+        </h2>
+        <div class="options-2">
+            <form action="." method="POST">
+                {% csrf_token %}
+                <input class='btn-z' type="submit" value='Sim'>
+                {% comment %} <button><a href="{% url "servicos:alterar" post.id %}">Não</a></button> {% endcomment %}
+            </form>
+            <a  class='btn-z' href="{% url "servicos:servicos" %}">Não</a>
+
+        </div>
+{% endblock %}
+ 

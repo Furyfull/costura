@@ -18,17 +18,26 @@ def services(request):
         form = forms.new_service()
     return render(request, 'servicos/services.html', {'form': form, 'servicos':servicos})
 
-
 def update_services(request, id):
     
-    post=get_object_or_404(models.servicos, pk=id)
-    form = forms.new_service(instance=post)
+    obj=get_object_or_404(models.servicos, pk=id)
+    form = forms.new_service(instance=obj)
 
     if request.method == 'POST':
-        form = forms.new_service(request.POST, instance=post)
+        form = forms.new_service(request.POST, instance=obj)
         if form.is_valid():
-            post.save()
+            form.save()
             return redirect('servicos:servicos')
 
-    return render(request, 'servicos/alterar.html', {'form': form,'post':post})
+    return render(request, 'servicos/alterar.html', {'form': form,'post':obj})
+
+def delete_services(request, id):
+    
+    obj=get_object_or_404(models.servicos, pk=id)
+    form = forms.new_service(instance=obj)
+    if request.method == 'POST':
+        obj.delete()
+        messages.success(request, "Serviço %s apagado !!!" % obj.nome)
+        return redirect('servicos:servicos')
+    return render(request, 'servicos/apagar.html', {'form': form,'post':obj})
 

@@ -15,6 +15,7 @@
                 <h2>Serviço: {{ service.nome }}</h2>
                 <p>Valor: {{ service.valor }}</p>
                 <a href="{% url "servicos:alterar" service.id %}">Alterar</a>
+                <a href="{% url "servicos:deletar" service.id %}">Deletar</a>
             </div>
         {% endfor %}
     </div>
