@@ -5,16 +5,13 @@
 <button class="create-button" onclick="window.location.href='{% url "ordens:new_order" %}'">Criar Nova Ordem</button>
 <div class="card-list">
     {% for order in orders %}
-    <div class="card">
-        <h2>Cliente: {{ order.cliente }}</h2>
-        <p>Data do Pedido: {{ order.data_pedido }}</p>
-        <p>Data de Entrega: {{ order.data_entrega }}</p>
-        <p>Serviço: {{ order.servico }}</p>
-        <p>Descrição: {{ order.descricao }}</p>
-        <p>Costureira: {{ order.costureira }}</p>
-        <p>Quantidade: {{ order.quantidade }}</p>
-        <p>Valor Total: {{ order.valor_total }}</p>
-    </div>
+        <div class="card">
+            <a href="{% url "ordens:edit_order" order.id %}">
+            <h2>Cliente: {{ order.cliente }}</h2></a>
+            <p>Data do Pedido: {{ order.data_pedido }}</p>
+            
+           {% comment %}  <p>Data de Entrega: {{ order.data_entrega }}</p> {% endcomment %}
+        </div>
     {% endfor %}
 </div>
 {% endblock %}

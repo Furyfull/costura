@@ -1,12 +1,12 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<h1 style="color: white;">Criar Nova Ordem</h1>
+<h1 style="color: white;">Editar Ordem</h1>
 <div class="card">
     <form method='post'>
         {% csrf_token %}
         {{form}}
-        <button type="submit">Salvar</buttxson>
+        <button type="submit">Salvar</button>
     </form>
 </div>
 

@@ -1,14 +1,26 @@
 from django import forms
-from .models import Ordem
+from . import models
 
-class new_ordem(forms.ModelForm):
+class CriaOrdem(forms.ModelForm):
     class Meta:
-        model = Ordem
-        fields = '__all__'
+        model = models.Ordem
+        fields = ['cliente']
         
+        # widgets = {
+        #     # 'data_pedido':forms.DateTimeInput(attrs={'type':'datetime-local'}),
+        #     # 'data_entrega':forms.DateTimeInput(attrs={'type':'datetime-local'}),
+        # }
+
+class OrdemItemForm(forms.ModelForm):
+    class Meta:
+        model = models.OrdemItem
+        fields = ['servico', 'quantidade','descricao','costureira']
         widgets = {
-            'data_pedido':forms.DateTimeInput(attrs={'type':'datetime-local'}),
-            'data_entrega':forms.DateTimeInput(attrs={'type':'datetime-local'}),
-            'quantidade':forms.NumberInput(attrs={'min':'1','value':'1'}),
-            'valor':forms.NumberInput(attrs={'min':'0', 'value': '0.00'}),
+            'servico': forms.Select(),
+            'descricao': forms.Textarea(attrs={'rows': 4, 'cols': 40, 'placeholder': 'Descrição opcional'}),
+        }
+        labels = {
+            'servico': 'Serviço',
+            'quantidade': 'Quantidade',
+            'descricao': 'Descrição',
         }
