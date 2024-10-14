@@ -1,13 +1,86 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<h1 style="color: white;">Editar Ordem</h1>
-<div class="card">
-    <form method='post'>
+<div class='block'>
+    <h1 style="color: white;">Editar Ordem do Cliente "{{cliente.nome}}"</h1>
+    <div>
+        <a class='btn btn-outline-secondary' href="{% url "ordens:ordens" %}">Voltar</a>
+    </div>
+</div>
+
+
+{% if messages %}
+    <ul class="alert alert-success">
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+    </ul>
+{% endif %}
+
+<div class="card pluss">
+    <h3>Adicionar Serviços</h3>
+    <form method="post">
         {% csrf_token %}
-        {{form}}
-        <button type="submit">Salvar</button>
+
+        {{form.servico.label}}:
+        <select id="servico" name="servico">
+            <option value="">Selecione um serviço</option>
+            {% for servico in servicos %}
+                <option value="{{ servico.id }}" data-preco="{{ servico.valor }}">
+                    {{ servico.nome }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <h4 id="preco">Preço: R$ 0,00</h4>
+        {{ form.quantidade.label }}: {{ form.quantidade }}
+        <h4 id="valor-total">Valor Total: R$ 0,00</h4>
+        
+        {{ form.costureira.label }}: {{ form.costureira }}
+        {{ form.descricao.label }}: {{ form.descricao }}
+
+        <br>
+        <button type="submit">Adicionar Serviço</button>
     </form>
 </div>
 
+<h3>Serviços Adicionados:</h3>
+<p><strong>Total:</strong> {{ total }}</p>
+
+        
+            <table class="table table-striped center">
+                <thead>
+                    <tr>
+                        <th>Quantidade</th>
+                        <th>Serviço</th>
+                        <th>Descricao</th>
+                        <th>Total</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in ordem_itens %}
+                    <tr>
+                        <td>{{ item.quantidade }} x</td>
+                        <td>{{ item.nome }}</td>
+                        <td>
+                            {% if item.descricao %}
+                                {{ item.descricao }}
+                            {% else %}
+                                <p>Sem papo</p>
+                            {% endif %}
+                        </td>
+                        <td>{{ item.preco_total }}</td>
+                        <td>
+                            <a  href="{{ item.excluir }}" 
+                                class="btn btn-danger"
+                                onclick="return confirm('Tem certeza que deseja excluir este serviço?');"
+                                >
+                                Excluir
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
 {% endblock %}

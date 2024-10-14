@@ -5,27 +5,30 @@
         {% if messages %}
             <ul class="messages">
                 {% for message in messages %}
-                {{ message }}
+                    {{ message }}
                 {% endfor %}
             </ul>
         {% endif %}
+
+    <div class="card pluss" >
+        <form method="post">
+            {% csrf_token %}
+            {{form}}
+            <button type="submit">Cadastrar Serviço</button> 
+        </form>
+    </div>
+
     <div class="card-list">
         {% for service in servicos %}
             <div class="card">
                 <h2>Serviço: {{ service.nome }}</h2>
                 <p>Valor: {{ service.valor }}</p>
-                <a href="{% url "servicos:alterar" service.id %}">Alterar</a>
-                <a href="{% url "servicos:deletar" service.id %}">Deletar</a>
+                <div class='btn-card'>
+                    <div><a class="btn btn-success" href="{% url "servicos:alterar" service.id %}">Alterar</a></div>
+                    <div><a class="btn btn-danger" href="{% url "servicos:deletar" service.id %}">Deletar</a></div>
+                </div>
             </div>
         {% endfor %}
     </div>
-    <div class="card">
-        <form action="." method="post">
-
-            {% csrf_token %}
-            {{form}}
-
-            <button type="submit">Cadastrar Serviço</button> 
-        </form>
-    </div>
+    
 {% endblock %}

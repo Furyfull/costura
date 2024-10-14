@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h1>Clientes</h1>
+<button class="create-button" onclick="window.location.href='{% url "cliente:cadastro_cliente" %}'">Cadastrar novo cliente</button>
+<div class="card-list">
+    {% for cliente in clientes %}
+        <div class="card">
+            <h2>{{ cliente.nome }}</h2><br>
+            <div class='btn-card'>
+                <a class='btn btn-info' href="{% url "cliente:ordens_cliente" cliente.id %}">Ordens</a>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

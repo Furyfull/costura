@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class='block'>
+    <h1>Ordens do {{cliente}}</h1>
+    <div>
+        <a class='btn btn-outline-secondary' href="{% url "cliente:clientes" %}">Voltar</a>
+    </div>
+</div>
+<div >
+    <table class='tabela-cliente-ordem table table-striped'>
+        <thead>
+            <th>Total</th>
+            <th>Data o pedido</th>
+            <th>Data de entrega</th>
+            <th>Status</th>
+            <th></th>
+        </thead>
+        <tbody>
+            {% if cliente.ordens.count  %}
+                {% for ordem in cliente.ordens.all %}
+                <tr>
+                    <td>
+                        {{ordem.total}}
+                    </td>
+                    <td>
+                        {{ordem.data_pedido}}
+                    </td>
+                    <td>
+                        ...
+                    </td>
+                    <td>
+                        ...
+                    </td>
+                    <td style='text-align: center;'>
+                        <a class='btn btn-outline-primary' href="{% url "ordens:edit_order" ordem.id %}">Ver Ordem</a>
+                        <a class='btn btn-outline-secondary' href="#">Imprimir</a>
+                    </td>
+                </tr>
+                {% endfor %}
+                {% else %}
+                <td colspan="5" >Não possui ordens...</td>
+            {% endif %}
+            
+            
+        </tbody>
+    </table>
+</div>
+{% endblock %}

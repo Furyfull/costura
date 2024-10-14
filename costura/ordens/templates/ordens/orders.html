@@ -9,7 +9,21 @@
             <a href="{% url "ordens:edit_order" order.id %}">
             <h2>Cliente: {{ order.cliente }}</h2></a>
             <p>Data do Pedido: {{ order.data_pedido }}</p>
+            <div class='btn-card'>
+                <div>
+                    <a  href="{% url "ordens:edit_order" order.id %}" class="btn btn-success">
+                        Editar
+                    </a>
+                </div>
+                <div>
+                    <a  href="{{ order.get_delete_order }}" class="btn btn-danger"
+                        onclick="return confirm('Tem certeza que deseja excluir este serviço?');">
+                        Excluir
+                    </a>
+                </div>
+            </div>
             
+           
            {% comment %}  <p>Data de Entrega: {{ order.data_entrega }}</p> {% endcomment %}
         </div>
     {% endfor %}

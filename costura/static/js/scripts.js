@@ -1,28 +1,19 @@
-// document.addEventListener('DOMContentLoaded', function () {
-//     const serviceSelect = document.getElementById('servico');
-//     const valueInput = document.getElementById('valor');
-//     const quantityInput = document.getElementById('quantidade');
-//     const totalValueInput = document.getElementById('valor_total');
+document.getElementById('servico').onchange = function () { atualizarPreco() }
+document.getElementById('id_quantidade').oninput = function () { atualizarPreco() }
 
-//     serviceSelect.addEventListener('change', function () {
-//         const selectedService = serviceSelect.value;
-//         fetch('/services/json')
-//             .then(response => response.json())
-//             .then(data => {
-//                 const service = data.services.find(s => s.nome === selectedService);
-//                 if (service) {
-//                     valueInput.value = service.valor;
-//                     updateTotalValue();
-//                 }
-//             });
-//     });
+function atualizarPreco() {
+    const produtoSelect = document.getElementById('servico');
+    const precoOut = document.getElementById('preco');
+    const quantidadeInput = document.getElementById('id_quantidade');
+    const totalOut = document.getElementById('valor-total');
 
-//     quantityInput.addEventListener('input', updateTotalValue);
+    // Obtém o preço unitário do produto selecionado (via data-preco)
+    const selectedOption = produtoSelect.options[produtoSelect.selectedIndex];
+    const preco = parseFloat(selectedOption.getAttribute('data-preco')) || 0;
+    const quantidade = parseInt(quantidadeInput.value) || 1;
 
-//     function updateTotalValue() {
-//         const value = parseFloat(valueInput.value) || 0;
-//         const quantity = parseInt(quantityInput.value) || 0;
-//         totalValueInput.value = value * quantity;
-//     }
-// });
-// document.addEventListener()
+    // Calcula e atualiza o valor total
+    totalOut.innerHTML = `Valor Total: R$ ${(preco * quantidade).toFixed(2)}`;
+    precoOut.innerHTML = `Preço: R$ ${(preco).toFixed(2)}`;
+}
+

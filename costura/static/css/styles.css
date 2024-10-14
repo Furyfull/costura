@@ -51,6 +51,7 @@ body {
 
 .content {
     padding: 0 2% 0 2%;
+    margin-bottom: 10%;
 }
 
 h1 {
@@ -61,8 +62,23 @@ h1 {
     background: #fff;
     border-radius: 8px;
     padding: 20px;
-    margin: 20px 0;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+    &.pluss {
+        margin: 3% 0;
+    }
+}
+
+.tabela-cliente-ordem {
+    margin: 5% 0;
+    width: 70%;
+
+    & td,
+    th {
+        vertical-align: middle;
+        text-align: left;
+        padding-left: 3rem;
+    }
 }
 
 .card form {
@@ -83,6 +99,20 @@ h1 {
     width: 90%;
 }
 
+.block {
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    text-align: center;
+}
+
+.btn-card {
+    display: flex;
+    justify-content: space-between;
+}
+
+
 .card form label {
     display: block;
 }
@@ -100,14 +130,11 @@ h1 {
 }
 
 .card-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
 }
 
-.card-list .card {
-    flex: 1 1 calc(33.333% - 40px);
-}
 
 .create-button {
     background-color: #ff7f50;
