@@ -19,7 +19,11 @@ def cadastro_cliente(request):
 
 def ordens_cliente(request, id):
     cliente = get_object_or_404(models.Cliente, pk=id)
-    ordens = Ordem.objects.all()
     return render(request, 'cliente/ordens_cliente.html',{
         'cliente':cliente,
     })
+
+def vis_ordem_cliente(request, id):
+    ordem = get_object_or_404(Ordem, pk=id)
+    objs = ordem.itens.all()
+    return render(request, 'cliente/vis_ordem_cliente.html', {'itens':objs, 'ordem':ordem})

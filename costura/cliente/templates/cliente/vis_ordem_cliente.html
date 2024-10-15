@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class='block'>
+    <h1>{{ordem.cliente}} - {{ordem.data_pedido|date:"d/m/y (H:i)"}} </h1>
+    <div>
+        <a class='btn btn-success' href="{% url "ordens:edit_order" ordem.id %}">Editar</a>
+    </div>
+</div>
+
+<table class='tabela-cliente-ordem table table-striped'>
+    <thead>
+        <tr>
+            <th>Quantidade</th>
+            <th>Servico</th>
+            <th>Costureira</th>
+            <th>Valor Final</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if itens %}
+            {% for item in itens %}
+                <tr>
+                    <td>{{item.quantidade}} x </td>
+                    <td>{{item.servico}} </td>
+                    <td>{{item.costureira}} </td>
+                    <td>{{item.preco_total}} </td>
+                </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan='4'>
+                    Nenhum serviço adicionado ...
+                </td>
+            </tr>
+        {% endif %}
+    </tbody>
+
+</table>
+
+
+{% endblock %}

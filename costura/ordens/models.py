@@ -37,3 +37,6 @@ class OrdemItem(models.Model):
     
     def get_delete_item(self):
         return reverse('ordens:delete_order_item', kwargs={'id': self.id})
+    
+    def preco_total(self):
+        return self.quantidade * self.servico.valor

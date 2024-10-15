@@ -11,7 +11,7 @@
     <table class='tabela-cliente-ordem table table-striped'>
         <thead>
             <th>Total</th>
-            <th>Data o pedido</th>
+            <th>Data do pedido</th>
             <th>Data de entrega</th>
             <th>Status</th>
             <th></th>
@@ -24,7 +24,7 @@
                         {{ordem.total}}
                     </td>
                     <td>
-                        {{ordem.data_pedido}}
+                        {{ordem.data_pedido|date:"d/M/y"}}
                     </td>
                     <td>
                         ...
@@ -33,7 +33,7 @@
                         ...
                     </td>
                     <td style='text-align: center;'>
-                        <a class='btn btn-outline-primary' href="{% url "ordens:edit_order" ordem.id %}">Ver Ordem</a>
+                        <a class='btn btn-outline-primary' href="{% url "cliente:preview" ordem.id %}">Ver Ordem</a>
                         <a class='btn btn-outline-secondary' href="#">Imprimir</a>
                     </td>
                 </tr>

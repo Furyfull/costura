@@ -44,7 +44,7 @@
     </form>
 </div>
 
-<h3>Serviços Adicionados:</h3>
+<h3>Serviços:</h3>
 <p><strong>Total:</strong> {{ total }}</p>
 
         
@@ -53,6 +53,7 @@
                     <tr>
                         <th>Quantidade</th>
                         <th>Serviço</th>
+                        <th>Costureira</th>
                         <th>Descricao</th>
                         <th>Total</th>
                         <th>Ações</th>
@@ -63,6 +64,7 @@
                     <tr>
                         <td>{{ item.quantidade }} x</td>
                         <td>{{ item.nome }}</td>
+                        <td>{{ item.costureira }}</td>
                         <td>
                             {% if item.descricao %}
                                 {{ item.descricao }}
