@@ -10,4 +10,6 @@ urlpatterns = [
     # Excluidores
     path('excluir-item_<int:id>/', views.delete_order_item, name='delete_order_item'),
     path('excluir-ordem_<int:id>/', views.delete_order, name='delete_order'),
+    # Editar modal
+    path('update_status/<int:id>/', views.update_status, name='update_status'),
 ]

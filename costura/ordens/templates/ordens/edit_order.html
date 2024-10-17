@@ -56,7 +56,7 @@
                         <th>Costureira</th>
                         <th>Descricao</th>
                         <th>Total</th>
-                        <th>Ações</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -85,4 +85,8 @@
                     {% endfor %}
                 </tbody>
             </table>
+<script>
+    document.getElementById('servico').onchange = function () { atualizarPreco() }
+    document.getElementById('id_quantidade').oninput = function () { atualizarPreco() }
+</script>
 {% endblock %}

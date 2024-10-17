@@ -9,12 +9,17 @@ COSTUREIRA={
     'Julia':'JULIA',
     'Carlinha':'CARLINHA',
 }
+STATUS=[
+    (0, 'Em Andamento'),
+    (1, 'Concluido'),
+    (2, 'Entregue'),]
 
 # Create your models here.
 class Ordem(models.Model):
     cliente = models.ForeignKey(Cliente, related_name='ordens', on_delete=models.CASCADE)
     data_pedido = models.DateTimeField(auto_now_add=True)
-    # data_entrega = models.DateTimeField(auto_now_add=False)
+    data_entrega = models.DateField()
+    status = models.IntegerField(choices=STATUS, default=0)
 
     def __str__(self):
         return f"Ordem de {self.cliente} - {self.data_pedido}"

@@ -1,6 +1,30 @@
-document.getElementById('servico').onchange = function () { atualizarPreco() }
-document.getElementById('id_quantidade').oninput = function () { atualizarPreco() }
+//pagina dashboard
+document.addEventListener('DOMContentLoaded', function () {
+    const hoje = new Date();
 
+    const diaHoje = hoje.getDate();
+    const mesHoje = hoje.getMonth() + 1;
+    const anoHoje = hoje.getFullYear().toString().slice(-2);
+    const dataHoje = `${diaHoje}/${mesHoje}/${anoHoje}`;
+    console.log(dataHoje)
+    // Seleciona todas as células que contêm a data de entrega
+    const linhas = document.querySelectorAll('tr td:nth-child(4)');
+    linhas.forEach(celula => {
+        const dataEntrega = celula.getAttribute('data-value');
+        console.log(dataEntrega + dataHoje);
+
+        // Verifica se a data de entrega é igual à data de hoje
+        if (dataEntrega === dataHoje) {
+            celula.style.color = 'yellow';
+        } else if (dataEntrega < dataHoje) {
+            celula.style.color = 'red';
+        } else {
+            celula.style.color = 'green';
+        }
+    })
+});
+
+//Page editar ordem
 function atualizarPreco() {
     const produtoSelect = document.getElementById('servico');
     const precoOut = document.getElementById('preco');
@@ -17,3 +41,18 @@ function atualizarPreco() {
     precoOut.innerHTML = `Preço: R$ ${(preco).toFixed(2)}`;
 }
 
+// Função para abrir o modal
+function openModal(orderId) {
+    var modal = document.getElementById('modal-' + orderId);
+    if (modal) {
+        modal.style.display = 'block';
+    }
+}
+
+// Função para fechar o modal
+function closeModal(orderId) {
+    var modal = document.getElementById('modal-' + orderId);
+    if (modal) {
+        modal.style.display = 'none';
+    }
+}

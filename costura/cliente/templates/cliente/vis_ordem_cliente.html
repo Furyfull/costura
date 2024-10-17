@@ -5,8 +5,10 @@
     <h1>{{ordem.cliente}} - {{ordem.data_pedido|date:"d/m/y (H:i)"}} </h1>
     <div>
         <a class='btn btn-success' href="{% url "ordens:edit_order" ordem.id %}">Editar</a>
+    
     </div>
 </div>
+
 
 <table class='tabela-cliente-ordem table table-striped'>
     <thead>
@@ -24,9 +26,15 @@
                     <td>{{item.quantidade}} x </td>
                     <td>{{item.servico}} </td>
                     <td>{{item.costureira}} </td>
-                    <td>{{item.preco_total}} </td>
+                    <td>R$ {{item.preco_total}} </td>
                 </tr>
             {% endfor %}
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <th>Total: R$ {{ordem.total}} </th>
+            </tr>
         {% else %}
             <tr>
                 <td colspan='4'>

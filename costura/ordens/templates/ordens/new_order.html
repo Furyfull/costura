@@ -5,7 +5,8 @@
 <div class="card">
     <form method='post'>
         {% csrf_token %}
-        {{form}}
+        {{form.cliente.label}}: {{form.cliente}}
+        Data entrega:: {{form.data_entrega}}
         <button type="submit">Salvar</buttxson>
     </form>
 </div>

@@ -2,6 +2,47 @@
 
 {% block content %}
 <h1>Dashboard</h1>
-<button id="reloadButton">Recarregar Dados</button>
+{% comment %} <button id="reloadButton">Recarregar Dados</button> {% endcomment %}
+
+<p>Cadastrar costureira</p>
+<p><del>adicionar status ao model</del></p>
+<p> adicionar coisas do cliente ao model</p>
+<p><del>adicionar modal no ORDENS DE SERVICO</del></p>
+
+
+<table class='tabela-cliente-ordem table table-striped sortable'>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Cliente</th>
+            <th>Data de Pedido</th>
+            <th>Data de Entrega</th>
+            <th>Valor Final</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if ordens %}
+            {% for ordem in ordens %}
+                <tr>
+                    <td>{{ordem.id}}</td>
+                    <td>{{ordem.cliente}}</td>
+                    <td>{{ordem.data_pedido|date:'d / M / y'}} </td>
+                    <td data-value="{{ ordem.data_entrega|date:'d/m/y' }}">{{ordem.data_entrega|date:'d / M / y'}} </td>
+                    <td>{{ordem.total}} </td>
+                    <td>{{ordem.get_status_display}}</td>
+                </tr>
+            {% endfor %}
+                
+        {% else %}
+            <tr>
+                <td colspan='4'>
+                    Nenhuma Serviço...
+                </td>
+            </tr>
+        {% endif %}
+    </tbody>
+
+</table>
 
 {% endblock %}

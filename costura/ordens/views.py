@@ -8,8 +8,22 @@ from django.contrib import messages
 
 # Create your views here.
 def ordens(request):
-    orders= models.Ordem.objects.all()
-    return render(request, 'ordens/orders.html',{'orders':orders})
+    orders= models.Ordem.objects.all().order_by('status')
+    status_choices = models.Ordem._meta.get_field('status').choices
+    
+    return render(request, 'ordens/orders.html',{
+        'orders':orders,
+        'status_choices': status_choices,
+        })
+
+def update_status(request, id):
+    order = get_object_or_404(models.Ordem, pk=id)
+    if request.method == 'POST':
+        new_status = request.POST.get('status')
+        if new_status is not None:
+            order.status = int(new_status)
+            order.save()
+    return redirect('ordens:ordens') 
 
 #cria uma ordem para o cliente
 def new_order(request):

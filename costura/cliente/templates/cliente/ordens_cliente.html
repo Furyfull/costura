@@ -10,7 +10,7 @@
 <div >
     <table class='tabela-cliente-ordem table table-striped'>
         <thead>
-            <th>Total</th>
+            <th>ID</th>
             <th>Data do pedido</th>
             <th>Data de entrega</th>
             <th>Status</th>
@@ -21,24 +21,23 @@
                 {% for ordem in cliente.ordens.all %}
                 <tr>
                     <td>
-                        {{ordem.total}}
+                        {{ordem.id}}
                     </td>
                     <td>
-                        {{ordem.data_pedido|date:"d/M/y"}}
+                        {{ordem.data_pedido|date:"d / M / y"}}
                     </td>
                     <td>
-                        ...
+                        {{ordem.data_entrega|date:"d / M / y"}}
                     </td>
                     <td>
-                        ...
+                        Em andamento
                     </td>
                     <td style='text-align: center;'>
                         <a class='btn btn-outline-primary' href="{% url "cliente:preview" ordem.id %}">Ver Ordem</a>
-                        <a class='btn btn-outline-secondary' href="#">Imprimir</a>
                     </td>
                 </tr>
                 {% endfor %}
-                {% else %}
+            {% else %}
                 <td colspan="5" >Não possui ordens...</td>
             {% endif %}
             

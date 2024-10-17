@@ -6,26 +6,66 @@
 <div class="card-list">
     {% for order in orders %}
         <div class="card">
-            <a href="{% url "ordens:edit_order" order.id %}">
-            <h2>Cliente: {{ order.cliente }}</h2></a>
-            <p>Data do Pedido: {{ order.data_pedido }}</p>
-            <div class='btn-card'>
-                <div>
-                    <a  href="{% url "ordens:edit_order" order.id %}" class="btn btn-success">
-                        Editar
-                    </a>
+            <h2>Pedido: {{ order.id }}</h2>
+            <p>Cliente: {{ order.cliente }}</p>
+            <p>Data do Pedido: {{ order.data_pedido|date:'d / M / y  -  H:m' }}</p>
+            <p>Data Para Entrega: {{ order.data_entrega|date:'d / M / y' }} </p>
+            <p>Status: {{order.get_status_display}}</p>
+                <div class='btn-card'>
+                    <div>
+                        {% if order.status !=  2%}
+                            <a  href="{% url "ordens:edit_order" order.id %}" class="btn btn-success">
+                                Editar
+                            </a>
+                        {% endif %}        
+                    </div>
+                    <div>
+                        <!-- Botão para abrir o modal -->
+                        <button class="btn btn-primary" onclick="openModal({{ order.id }})">Status
+                        </button>
+                    </div>
+                    <div>
+                        <a  href="{{ order.get_delete_order }}" class="btn btn-danger"
+                            onclick="return confirm('Tem certeza que deseja excluir este serviço?');">
+                            Excluir
+                        </a>
+                    </div>
                 </div>
-                <div>
-                    <a  href="{{ order.get_delete_order }}" class="btn btn-danger"
-                        onclick="return confirm('Tem certeza que deseja excluir este serviço?');">
-                        Excluir
-                    </a>
+            
+        </div>
+
+        <!-- Modal -->
+        <div class="modal"  id="modal-{{ order.id }}" style="display: none;" >
+            <!--Centraliza Box-->
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Ordem {{ order.id }}</h5>
+                        <button type="button" class="close" onclick="closeModal({{ order.id }})" >&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="status-form-{{ order.id }}" method="post" action="{% url 'ordens:update_status' order.id %}">
+                            {% csrf_token %}
+                                <label for="status">Status:</label>
+                                <select name="status" id="status-{{ order.id }}" class="form-control">
+                                    {% for value, display in status_choices %}
+                                        <option value="{{ value }}" {% if order.status == value %}selected{% endif %}>
+                                            {{ display }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" onclick="closeModal({{ order.id }})">Fechar</button>
+                        <button type="button" class="btn btn-primary" onclick="document.getElementById('status-form-{{ order.id }}').submit();">Salvar mudanças</button>
+                    </div>
+                    
                 </div>
             </div>
-            
-           
-           {% comment %}  <p>Data de Entrega: {{ order.data_entrega }}</p> {% endcomment %}
         </div>
+
+
     {% endfor %}
 </div>
 {% endblock %}
