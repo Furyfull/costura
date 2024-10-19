@@ -4,4 +4,4 @@ from . import models
 class CadastroCliente(forms.ModelForm):
     class Meta:
         model = models.Cliente
-        fields = ['nome']
+        fields = '__all__'

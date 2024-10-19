@@ -38,9 +38,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # apps…
     'servicos',
     'cliente',
     'ordens',
+    
+    # other 3rd party apps…
+    'django_select2',
+    'django_cpf_cnpj',
 ]
 
 MIDDLEWARE = [
@@ -120,6 +126,8 @@ DATETIME_FORMAT = "d/m/Y H:i"
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATIC_URL = 'static/'
 

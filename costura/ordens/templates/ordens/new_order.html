@@ -6,9 +6,17 @@
     <form method='post'>
         {% csrf_token %}
         {{form.cliente.label}}: {{form.cliente}}
-        Data entrega:: {{form.data_entrega}}
+        Data de entrega:: {{form.data_entrega}}
         <button type="submit">Salvar</buttxson>
     </form>
 </div>
 
+
+
 {% endblock %}
+{% block js %}
+    <script>
+        $('#id_cliente').select2();
+    </script>
+
+{% endblock js %}

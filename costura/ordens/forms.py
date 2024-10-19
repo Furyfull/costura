@@ -1,15 +1,14 @@
 from django import forms
 from . import models
 
+
 class CriaOrdem(forms.ModelForm):
     class Meta:
         model = models.Ordem
         fields = '__all__'
         
         widgets = {
-            # 'data_pedido':forms.DateTimeInput(attrs={'type':'datetime-local'}),
-            'data_entrega':forms.DateInput(format="%d/%m/%Y",
-                               attrs={'type': 'date'}),
+            'data_entrega':forms.DateInput(format="%d/%m/%Y",attrs={'type': 'date'}),
         }
 
 class OrdemItemForm(forms.ModelForm):
