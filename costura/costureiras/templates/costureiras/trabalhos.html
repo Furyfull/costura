@@ -12,6 +12,7 @@
                     <th>QTY</th>
                     <th>Serviço</th>
                     <th>Status</th>
+                    <th>Ação</th>
                 </tr>
             </thead>
             <tbody>
@@ -23,6 +24,7 @@
                     <td>{{serv.quantidade}} </td>
                     <td>{{serv.servico}} </td>
                     <td>{{serv.ordem.get_status_display}} </td>
+                    <td> <a class='btn btn-outline-dark' href="{% url "ordens:edit_order" serv.ordem.id %}">Ordem</a> </td>
                 </tr>
                 {% endfor %}
                 

@@ -24,8 +24,12 @@
                 <h2>Serviço: {{ service.nome }}</h2>
                 <p>Valor: {{ service.valor }}</p>
                 <div class='btn-card'>
-                    <div><a class="btn btn-success" href="{% url "servicos:alterar" service.id %}">Alterar</a></div>
-                    <div><a class="btn btn-danger" href="{% url "servicos:deletar" service.id %}">Deletar</a></div>
+                    <div><a class="btn btn-success" href="{% url "servicos:alterar" service.id %}">Editar</a></div>
+                    <div>
+                        <a class="top-dir" href="{% url "servicos:deletar" service.id %}">
+                            <i class="fa fa-light fa-trash fa-lg" style="color: #d11010;"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
         {% endfor %}

@@ -8,9 +8,15 @@
         <div class="card">
             <h2>Pedido: {{ order.id }}</h2>
             <p>Cliente: {{ order.cliente }}</p>
-            <p>Data do Pedido: {{ order.data_pedido|date:'d / M / y  -  H:m' }}</p>
+            <p>Data do Pedido: {{ order.data_pedido|date:'d / M / y    (H:m)' }}</p>
             <p>Data Para Entrega: {{ order.data_entrega|date:'d / M / y' }} </p>
             <p>Status: {{order.get_status_display}}</p>
+            <div>
+                <a  href="{{ order.get_delete_order }}" class="top-dir"
+                    onclick="return confirm('Tem certeza que deseja excluir este serviço?');">
+                    <i class="fa fa-light fa-trash fa-lg" style="color: #d11010;"></i>
+                </a>
+            </div>
                 <div class='btn-card'>
                     <div>
                         {% if order.status !=  2%}
@@ -24,13 +30,8 @@
                         <button class="btn btn-primary" onclick="openModal({{ order.id }})">Status
                         </button>
                     </div>
-                    <div>
-                        <a  href="{{ order.get_delete_order }}" class="btn btn-danger"
-                            onclick="return confirm('Tem certeza que deseja excluir este serviço?');">
-                            Excluir
-                        </a>
-                    </div>
                 </div>
+                    
             
         </div>
 

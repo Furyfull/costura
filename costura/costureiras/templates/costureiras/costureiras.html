@@ -6,7 +6,7 @@
     <div class='card-list'>
         {% for costureira in costureiras %}
             <div class="card">
-                <h2>{{costureira.nome}}</h2>
+                <h2>{{costureira.nome}}</h2><br>
                 <div>
                     <a class='btn btn-primary ' href="{% url "costureiras:trabalhos" costureira.id costureira.nome %}">Trabalhos</a>
                 </div>
