@@ -24,6 +24,6 @@ urlpatterns = [
     path('ordens/', include('ordens.urls'),name='ordem_main_page'),
     path('servicos/', include('servicos.urls')),
     path('clientes/', include('cliente.urls')),
+    path('costureiras/', include('costureiras.urls')),
 
-    path("select2/", include("django_select2.urls")),
 ]

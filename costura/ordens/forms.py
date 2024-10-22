@@ -5,7 +5,7 @@ from . import models
 class CriaOrdem(forms.ModelForm):
     class Meta:
         model = models.Ordem
-        fields = '__all__'
+        fields = ['cliente','data_entrega']
         
         widgets = {
             'data_entrega':forms.DateInput(format="%d/%m/%Y",attrs={'type': 'date'}),

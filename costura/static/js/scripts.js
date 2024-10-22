@@ -1,5 +1,5 @@
 //pagina dashboard
-document.addEventListener('DOMContentLoaded', function () {
+function colorEntrega() {
     const hoje = new Date();
 
     const diaHoje = hoje.getDate();
@@ -15,14 +15,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Verifica se a data de entrega é igual à data de hoje
         if (dataEntrega === dataHoje) {
-            celula.style.color = 'yellow';
+            celula.style.color = 'blue';
         } else if (dataEntrega < dataHoje) {
             celula.style.color = 'red';
         } else {
             celula.style.color = 'green';
         }
     })
-});
+};
 
 //Page editar ordem
 function atualizarPreco() {

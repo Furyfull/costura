@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <h1>Trabalhos da {{costureira}} </h1>
+    {% if servicos%}
+        <table class='tabela-cliente-ordem table table-striped table-light'>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Cliente</th>
+                    <th>Data de Entrega</th>
+                    <th>QTY</th>
+                    <th>Serviço</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for serv in servicos %}
+                <tr>
+                    <td>{{serv.ordem.id}} </td>
+                    <td>{{serv.ordem.cliente}} </td>
+                    <td>{{serv.ordem.data_entrega|date:"d/m/Y"}} </td>
+                    <td>{{serv.quantidade}} </td>
+                    <td>{{serv.servico}} </td>
+                    <td>{{serv.ordem.get_status_display}} </td>
+                </tr>
+                {% endfor %}
+                
+            </tbody>
+        </table>
+            
+    {% endif %}
+        
+{% endblock %}
+{% block js %}
+
+{% endblock js %}

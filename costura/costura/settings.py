@@ -43,9 +43,9 @@ INSTALLED_APPS = [
     'servicos',
     'cliente',
     'ordens',
+    'costureiras',
     
     # other 3rd party apps…
-    'django_select2',
     'django_cpf_cnpj',
 ]
 

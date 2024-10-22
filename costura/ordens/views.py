@@ -29,10 +29,11 @@ def update_status(request, id):
 def new_order(request):
     if request.method == 'POST':
         form = forms.CriaOrdem(request.POST)
+        
         if form.is_valid():
             ordem = form.save(commit=False)
             ordem.save()
-        return redirect('ordens:edit_order', id=ordem.id)
+            return redirect('ordens:edit_order', id=ordem.id)
     else:
         form = forms.CriaOrdem()
     return render(request, 'ordens/new_order.html', {'form': form})

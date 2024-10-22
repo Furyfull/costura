@@ -1,14 +1,9 @@
 from django.db import models
 from servicos.models import servicos
 from cliente.models import Cliente
+from costureiras.models import Costureira
 from django.urls import reverse
 
-
-COSTUREIRA={
-    'Maria':'MARIA',
-    'Julia':'JULIA',
-    'Carlinha':'CARLINHA',
-}
 STATUS=[
     (0, 'Em Andamento'),
     (1, 'Concluido'),
@@ -33,9 +28,9 @@ class Ordem(models.Model):
 class OrdemItem(models.Model):
     ordem = models.ForeignKey(Ordem, related_name='itens', on_delete=models.CASCADE)
     servico = models.ForeignKey(servicos, on_delete=models.CASCADE)
+    costureira = models.ForeignKey(Costureira, on_delete=models.CASCADE)
     quantidade = models.PositiveIntegerField()
     descricao = models.TextField(blank=True, null=True)  # Comentário opcional
-    costureira = models.CharField(max_length=10, choices=COSTUREIRA)
 
     def __str__(self):
         return f"{self.quantidade} x {self.servico.nome}"

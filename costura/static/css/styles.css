@@ -19,7 +19,7 @@ body {
 
 .sidebar h2 {
     font-size: 24px;
-    color: #333;
+    color: hwb(44 15% 18%);
 }
 
 .sidebar ul {
@@ -62,7 +62,7 @@ h1 {
     background: #fff;
     border-radius: 8px;
     padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(255, 230, 0, 0.1);
 
     &.pluss {
         margin: 3% 0;

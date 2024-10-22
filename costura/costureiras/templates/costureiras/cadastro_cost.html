@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <h1>Cadastro funcionário</h1>
+    <div class="card">
+        <form method='post'>
+                {% csrf_token %}
+                {{form}}
+                <button type="submit">Concluir</buttxson>
+        </form>
+    </div>
+    
+{% endblock %}
+{% block js %}
+
+{% endblock js %}
