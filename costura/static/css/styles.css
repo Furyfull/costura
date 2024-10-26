@@ -7,6 +7,10 @@ body {
     min-height: 100vh;
 }
 
+.flip {
+    user-select: none;
+}
+
 .top-dir {
     position: absolute;
     margin: 20px;

@@ -24,6 +24,7 @@
             <th>Data de Entrega</th>
             <th>Valor Final</th>
             <th>Status</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -36,6 +37,7 @@
                     <td class='dataccd' data-value="{{ ordem.data_entrega|date:'d/m/y' }}">{{ordem.data_entrega|date:'d / M / y'}} </td>
                     <td>{{ordem.total}} </td>
                     <td>{{ordem.get_status_display}}</td>
+                    <td><a class='btn btn-info' href="{% url "ordens:edit_order" ordem.id %}">Visualizar</a></td>
                 </tr>
             {% endfor %}
                 

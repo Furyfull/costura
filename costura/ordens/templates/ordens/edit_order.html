@@ -18,8 +18,9 @@
 {% endif %}
 
 <div class="card pluss">
-    <h3>Adicionar Serviços</h3>
-    <form method="post">
+    <h3 class='flip'>Adicionar Serviços</h3>
+    
+    <form method="post" id='adic' style="display: none;">
         {% csrf_token %}
 
         {{form.servico.label}}:
@@ -43,12 +44,12 @@
         <button type="submit">Adicionar Serviço</button>
     </form>
 </div>
-
+<br>
 <h3>Serviços:</h3>
 <p><strong>Total:</strong> {{ total }}</p>
 
         
-            <table class="table table-striped">
+    <table class="table table-striped">
                 <thead>
                     <tr>
                         <th>Quantidade</th>
@@ -84,9 +85,13 @@
                     </tr>
                     {% endfor %}
                 </tbody>
-            </table>
-<script>
-    document.getElementById('servico').onchange = function () { atualizarPreco() }
-    document.getElementById('id_quantidade').oninput = function () { atualizarPreco() }
-</script>
+    </table>
+
 {% endblock %}
+{% block js %}
+    <script>
+        $('#servico')       .change(     function(){ atualizarPreco()    });
+        $('#id_quantidade') .on('input', function(){ atualizarPreco()    });
+        $('.flip')          .click(      function(){ $('#adic').toggle() });
+    </script>
+{% endblock js %}
