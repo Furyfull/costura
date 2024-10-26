@@ -4,6 +4,15 @@
 <h1>Dashboard</h1>
 {% comment %} <button id="reloadButton">Recarregar Dados</button> {% endcomment %}
 
+<form method="GET" action="/">
+    <label for="start_date">Data Inicial:</label>
+    <input type="date" id="start_date" name="start_date" >
+    
+    <label for="end_date">Data Final:</label>
+    <input type="date" id="end_date" name="end_date"  value="{{ hoje|date:'Y-m-d' }}">
+    
+    <button type="submit" id="filterButton">Limpar</button>
+</form>
 
 
 <table class='tabela-cliente-ordem table table-striped sortable table-light'>
@@ -24,7 +33,7 @@
                     <td>{{ordem.id}}</td>
                     <td>{{ordem.cliente}}</td>
                     <td>{{ordem.data_pedido|date:'d / M / y'}} </td>
-                    <td data-value="{{ ordem.data_entrega|date:'d/m/y' }}">{{ordem.data_entrega|date:'d / M / y'}} </td>
+                    <td class='dataccd' data-value="{{ ordem.data_entrega|date:'d/m/y' }}">{{ordem.data_entrega|date:'d / M / y'}} </td>
                     <td>{{ordem.total}} </td>
                     <td>{{ordem.get_status_display}}</td>
                 </tr>
@@ -47,5 +56,11 @@
 {% block js %}
     <script>
         $(document).ready(colorEntrega());
+        $('#end_date').val(new Date().toISOString().substr(0, 10));
+        $('#start_date').on('input change', function() {
+                if ($(this).val() !== "") {
+                    $('#filterButton').text('Filtrar');
+                } 
+            });
     </script>
 {% endblock js %}

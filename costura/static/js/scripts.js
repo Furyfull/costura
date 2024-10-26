@@ -8,7 +8,7 @@ function colorEntrega() {
     const dataHoje = `${diaHoje}/${mesHoje}/${anoHoje}`;
     console.log(dataHoje)
     // Seleciona todas as células que contêm a data de entrega
-    const linhas = document.querySelectorAll('tr td:nth-child(4)');
+    const linhas = document.querySelectorAll('.dataccd');
     linhas.forEach(celula => {
         const dataEntrega = celula.getAttribute('data-value');
         console.log(dataEntrega + dataHoje);
