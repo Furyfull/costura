@@ -1,0 +1,19 @@
+.card-head {
+    display: grid;
+    grid-template-columns: auto 5rem;
+    align-items: center;
+
+    & h3 {
+        margin: auto 0;
+    }
+
+    & i {
+        padding: 0 1rem;
+        font-size: 1.5rem;
+        border: 1px dashed gray;
+    }
+}
+
+.flip {
+    user-select: none;
+}

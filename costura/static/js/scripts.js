@@ -56,5 +56,3 @@ function closeModal(orderId) {
         modal.style.display = 'none';
     }
 }
-
-

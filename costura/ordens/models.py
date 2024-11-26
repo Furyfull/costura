@@ -5,9 +5,10 @@ from costureiras.models import Costureira
 from django.urls import reverse
 
 STATUS=[
-    (0, 'Em Andamento'),
-    (1, 'Concluido'),
-    (2, 'Entregue'),]
+    (0, 'Não Iniciado'),
+    (1, 'Em Andamento'),
+    (2, 'Concluido'),
+    (3, 'Entregue'),]
 
 # Create your models here.
 class Ordem(models.Model):

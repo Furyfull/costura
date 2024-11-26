@@ -1,56 +1,60 @@
 {% extends "layout.html" %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static "css/dashboard.css" %}">
+{% endblock css %}
 
 {% block content %}
-<h1>Dashboard</h1>
-{% comment %} <button id="reloadButton">Recarregar Dados</button> {% endcomment %}
+    <h1>Dashboard</h1>
 
-<form method="GET" action="/">
-    <label for="start_date">Data Inicial:</label>
-    <input type="date" id="start_date" name="start_date" >
-    
-    <label for="end_date">Data Final:</label>
-    <input type="date" id="end_date" name="end_date"  value="{{ hoje|date:'Y-m-d' }}">
-    
-    <button type="submit" id="filterButton">Limpar</button>
-</form>
+    <form class='db' method="GET" action="/">
+        <label for="start_date">Data Inicial:</label>
+        <input type="date" id="start_date" name="start_date" >
+        
+        <label for="end_date">Data Final:</label>
+        <input type="date" id="end_date" name="end_date"  value="{{ hoje|date:'Y-m-d' }}">
+        
+        <button type="submit" class='btn btn-light' id="filterButton">Limpar</button>
+    </form>
 
 
-<table class='tabela-cliente-ordem table table-striped sortable table-light'>
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Cliente</th>
-            <th>Data de Pedido</th>
-            <th>Data de Entrega</th>
-            <th>Valor Final</th>
-            <th>Status</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        {% if ordens %}
-            {% for ordem in ordens %}
-                <tr>
-                    <td>{{ordem.id}}</td>
-                    <td>{{ordem.cliente}}</td>
-                    <td>{{ordem.data_pedido|date:'d / M / y'}} </td>
-                    <td class='dataccd' data-value="{{ ordem.data_entrega|date:'d/m/y' }}">{{ordem.data_entrega|date:'d / M / y'}} </td>
-                    <td>{{ordem.total}} </td>
-                    <td>{{ordem.get_status_display}}</td>
-                    <td><a class='btn btn-info' href="{% url "ordens:edit_order" ordem.id %}">Visualizar</a></td>
-                </tr>
-            {% endfor %}
-                
-        {% else %}
+    <table class='tabela-cliente-ordem table table-striped sortable table-light'>
+        <thead>
             <tr>
-                <td colspan='4'>
-                    Nenhuma Serviço...
-                </td>
+                <th>ID</th>
+                <th>Cliente</th>
+                <th>Data de Pedido</th>
+                <th>Data de Entrega</th>
+                <th>Valor Final</th>
+                <th>Status</th>
+                <th></th>
             </tr>
-        {% endif %}
-    </tbody>
+        </thead>
+        <tbody>
+            {% if ordens %}
+                {% for ordem in ordens %}
+                    <tr>
+                        <td>{{ordem.id}}</td>
+                        <td>{{ordem.cliente}}</td>
+                        <td>{{ordem.data_pedido|date:'d / M / y'}} </td>
+                        <td class='dataccd' data-value="{{ ordem.data_entrega|date:'d/m/y' }}">{{ordem.data_entrega|date:'d / M / y'}} </td>
+                        <td>{{ordem.total}} </td>
+                        <td>{{ordem.get_status_display}}</td>
+                        <td><a class='btn btn-info' href="{% url "ordens:edit_order" ordem.id %}">Visualizar</a></td>
+                    </tr>
+                {% endfor %}
+                    
+            {% else %}
+                <tr>
+                    <td colspan='4'>
+                        Nenhuma Serviço...
+                    </td>
+                </tr>
+            {% endif %}
+        </tbody>
 
-</table>
+    </table>
 
 
 {% endblock %}

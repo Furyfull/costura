@@ -1,4 +1,9 @@
 {% extends "layout.html" %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static "css/ordens.css" %}">
+{% endblock css %}
 
 {% block content %}
 <div class='block'>
@@ -18,7 +23,14 @@
 {% endif %}
 
 <div class="card pluss">
-    <h3 class='flip'>Adicionar Serviços</h3>
+    <div class='flip card-head'>
+        <h3 >Adicionar Serviços </h3> 
+        <div>
+            <i class='btn'> + </i>
+        </div> 
+    </div>
+    
+    
     
     <form method="post" id='adic' style="display: none;">
         {% csrf_token %}
@@ -45,7 +57,7 @@
     </form>
 </div>
 <br>
-<h3>Serviços:</h3>
+<h3 id='ff'>Serviços:</h3>
 <p><strong>Total:</strong> {{ total }}</p>
 
         
