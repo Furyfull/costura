@@ -15,7 +15,7 @@ function colorEntrega() {
 
         // Verifica se a data de entrega é igual à data de hoje
         if (dataEntrega === dataHoje) {
-            celula.style.color = 'blue';
+            celula.style.color = 'yellow';
         } else if (dataEntrega < dataHoje) {
             celula.style.color = 'red';
         } else {

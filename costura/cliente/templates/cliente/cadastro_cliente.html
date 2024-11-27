@@ -1,12 +1,18 @@
 {% extends "layout.html" %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static "css/cliente.css" %}">
+{% endblock css %}
 
 {% block content %}
 <h1 style="color: white;">Cadastro Cliente</h1>
 
-<div class="card">
+<div class="cardi">
     <form method='post'>
         {% csrf_token %}
-        {{form}}
+            {{form}}
+
         <input type="submit" value='Adicionar'>
     </form>
 </div>

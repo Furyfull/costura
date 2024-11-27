@@ -1,12 +1,19 @@
 {% extends "layout.html" %}
+{% load static %}
 
+{% block css %}
+    <link rel="stylesheet" href="{% static "css/ordens.css" %}">
+{% endblock css %}
 {% block content %}
 <h1 style="color: white;">Criar Nova Ordem</h1>
 <div class="card">
     <form method='post'>
         {% csrf_token %}
-        {{form.cliente.label}}: {{form.cliente}}
-        Data de entrega: {{form.data_entrega}}
+        {{form.cliente.label}}: 
+        <div class='tt'>
+            {{form.cliente}}
+        </div>
+        {{form.data_entrega.label}}: {{form.data_entrega}}
         <button type="submit">Salvar</buttxson>
     </form>
 </div>

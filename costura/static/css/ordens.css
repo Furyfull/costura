@@ -17,3 +17,22 @@
 .flip {
     user-select: none;
 }
+
+.card {
+    width: 70%;
+}
+
+input select {
+    background-color: aquamarine;
+}
+
+.tt>* {
+    width: 90%;
+    margin: 1rem 0;
+}
+
+.select2-container--default .select2-selection--single {
+    height: 2rem;
+    font-size: 1.2em;
+
+}

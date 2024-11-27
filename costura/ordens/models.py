@@ -14,7 +14,7 @@ STATUS=[
 class Ordem(models.Model):
     cliente = models.ForeignKey(Cliente, related_name='ordens', on_delete=models.CASCADE)
     data_pedido = models.DateTimeField(auto_now_add=True)
-    data_entrega = models.DateField()
+    data_entrega = models.DateField(verbose_name='Data de entrega')
     status = models.IntegerField(choices=STATUS, default=0)
 
     def __str__(self):
