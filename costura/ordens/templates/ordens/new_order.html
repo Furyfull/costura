@@ -9,11 +9,7 @@
 <div class="card">
     <form method='post'>
         {% csrf_token %}
-        {{form.cliente.label}}: 
-        <div class='tt'>
-            {{form.cliente}}
-        </div>
-        {{form.data_entrega.label}}: {{form.data_entrega}}
+        {{form}}
         <button type="submit">Salvar</buttxson>
     </form>
 </div>
