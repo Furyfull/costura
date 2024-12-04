@@ -38,7 +38,7 @@ function atualizarPreco() {
 
     // Calcula e atualiza o valor total
     totalOut.innerHTML = `Valor Total: R$ ${(preco * quantidade).toFixed(2)}`;
-    precoOut.innerHTML = `Preço: R$ ${(preco).toFixed(2)}`;
+    precoOut.innerHTML = `Valor Unitário: R$ ${(preco).toFixed(2)}`;
 }
 
 // Função para abrir o modal

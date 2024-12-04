@@ -1,4 +1,4 @@
-from django.shortcuts import render,get_object_or_404
+from django.shortcuts import render,get_object_or_404,HttpResponse
 from ordens.models import Ordem
 
 
@@ -14,3 +14,4 @@ def dashboard(request):
         ordens = ordens.filter(data_entrega__range=[start_date, end_date])
 
     return render(request, 'dashboard.html',{'ordens':ordens} )
+

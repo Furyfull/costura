@@ -5,7 +5,7 @@ from django_cpf_cnpj.fields import CPFField
 # Create your models here.
 class Cliente(models.Model):
     nome = models.CharField(max_length=100)
-    cpf = CPFField(masked=True,blank=True, null=True)
+    cpf = CPFField(masked=True,blank=True, null=True, verbose_name='CPF')
     endereco = models.CharField(max_length=100,blank=True, null=True)
     num =  models.IntegerField(blank=True, null=True)
     cidade = models.CharField(max_length=20,blank=True, null=True)

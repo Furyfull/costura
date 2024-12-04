@@ -32,7 +32,7 @@
     
     
     
-    <form method="post" id='adic' style="display: none;">
+    <form class='c1' method="post" id='adic' style="display: none;">
         {% csrf_token %}
 
         {{form.servico.label}}:
@@ -44,15 +44,14 @@
                 </option>
             {% endfor %}
         </select>
-
-        <h4 id="preco">Preço: R$ 0,00</h4>
+        
+        <h4 id="preco">Valor Unitário: R$ 0,00</h4>
         {{ form.quantidade.label }}: {{ form.quantidade }}
         <h4 id="valor-total">Valor Total: R$ 0,00</h4>
         
         {{ form.costureira.label }}: {{ form.costureira }}
         {{ form.descricao.label }}: {{ form.descricao }}
 
-        <br>
         <button type="submit">Adicionar Serviço</button>
     </form>
 </div>
@@ -105,5 +104,9 @@
         $('#servico')       .change(     function(){ atualizarPreco()    });
         $('#id_quantidade') .on('input', function(){ atualizarPreco()    });
         $('.flip')          .click(      function(){ $('#adic').toggle() });
+        $(document).ready(function() {
+            $('#servico').select2();
+            $('#id_costureira').select2();
+        });
     </script>
 {% endblock js %}

@@ -1,9 +1,13 @@
 {% extends "layout.html" %}
+{% load static %}
 
+{% block css %}
+    <link rel="stylesheet" href="{% static "css/servicos.css" %}">
+{% endblock css %}
 {% block content %}
     <h1>Cadastrar Serviço/Alterar Valor</h1>
         {% if messages %}
-            <ul class="messages">
+            <ul class="messages alert alert-warning" role="alert">
                 {% for message in messages %}
                     {{ message }}
                 {% endfor %}
@@ -11,7 +15,7 @@
         {% endif %}
 
     <div class="card pluss" >
-        <form method="post">
+        <form class='c1' method="post">
             {% csrf_token %}
             {{form}}
             <button type="submit">Cadastrar Serviço</button> 

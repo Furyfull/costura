@@ -1,14 +1,18 @@
 {% extends "layout.html" %}
+{% load static %}
 
+{% block css %}
+    <link rel="stylesheet" href="{% static "css/servicos.css" %}">
+{% endblock css %}
 {% block content %}
     <h1>Alterar Serviço: {{post.nome}}</h1>
-    <div class="card">
-        <form action="." method="POST">
+    <div class="card pluss">
+        <form class='c1' method="POST">
 
             {% csrf_token %}
             {{ form }}
 
-            <input type="submit" value='Alterar'>
+            <button type="submit">Alterar</button> 
         </form>
     </div>
 {% endblock %}

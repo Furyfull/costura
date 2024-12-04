@@ -6,15 +6,14 @@
 {% endblock css %}
 {% block content %}
 <h1 style="color: white;">Criar Nova Ordem</h1>
+
 <div class="card">
-    <form method='post'>
+    <form class='c1' method='post'>
         {% csrf_token %}
         {{form}}
-        <button type="submit">Salvar</buttxson>
+        <button type="submit">Salvar</button>
     </form>
 </div>
-
-
 
 {% endblock %}
 {% block js %}

@@ -24,19 +24,19 @@
 
 .select2.select2-container {
     width: 90% !important;
-    margin: 0.5rem 0 1rem 0;
+    margin: 0 0 1rem 0;
 }
 
 .select2.select2-container .select2-selection {
     border: 1px solid #ccc;
-    border-radius: 3px;
+    border-radius: 4px;
     height: 48px;
     outline: none !important;
     overflow: hidden;
 }
 
 .select2-container--default .select2-selection--single {
-    font-size: 1.2em;
+    font-size: 16px;
 }
 
 .select2-container .select2-selection--single .select2-selection__rendered {
@@ -46,7 +46,7 @@
 .select2.select2-container .select2-selection .select2-selection__arrow {
     background: #f8f8f8;
     border-left: 1px solid #ccc;
-    border-radius: 0 3px 3px 0;
+    border-radius: 0 4px 4px 0;
     height: 46px;
     width: 33px;
 }
