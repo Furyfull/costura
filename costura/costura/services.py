@@ -28,7 +28,7 @@ def emitir_nfce(certificado, senha, homologacao, token, csc, emitente_data, clie
         data_emissao=datetime.datetime.now(),
         data_saida_entrada=datetime.datetime.now(),
         tipo_documento=1,
-        municipio=emitente_data.endereco_municipio,
+        municipio='3550308', # No file MunIBGE-UF51.txt
         tipo_impressao_danfe=4,
         forma_emissao='1',
         cliente_final=1,

@@ -134,7 +134,7 @@ def emitir_nfe_view(request,id):
             endereco_logradouro='Rua da Paz',
             endereco_numero='666',
             endereco_bairro='Dom Aquino',
-            endereco_municipio='Cuiaba',
+            endereco_municipio='Cuiabá',
             endereco_uf='MT',
             endereco_cep='87704000',
             endereco_pais=CODIGO_BRASIL
