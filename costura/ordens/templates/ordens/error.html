@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Erro na Emissão da NF-e</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Erro na Emissão da NF-e</h1>
+        <p>Houve um problema ao tentar emitir a nota fiscal.</p>
+        <h2>Detalhes do Erro</h2>
+        <pre style="background-color: #f8d7da; padding: 15px; border-radius: 5px; color: #721c24; overflow-x: auto;">
+            {{ error }}
+        </pre>
+        <h2>Nota Fiscal Enviada</h2>
+        <pre style="background-color: #f4f4f4; padding: 15px; border-radius: 5px; overflow-x: auto;">
+            {{ nota|safe }}
+        </pre>
+        <a href="#" class="btn btn-secondary">Tentar Novamente</a>
+    </div>
+</body>
+</html>

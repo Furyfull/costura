@@ -1,9 +1,19 @@
 from django.shortcuts import render,redirect,get_object_or_404
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect,HttpResponse
 from . import forms,models
 from servicos.models import servicos
 from cliente.models import Cliente
 from django.contrib import messages
+
+from lxml import etree
+from decimal import Decimal
+from pynfe.entidades.emitente import Emitente
+from pynfe.entidades.cliente import Cliente
+from pynfe.utils.flags import CODIGO_BRASIL
+from costura.services import emitir_nfce
+import base64
+import xmltodict
+import json
 
 
 # Create your views here.
@@ -25,7 +35,6 @@ def update_status(request, id):
             order.save()
     return redirect('ordens:ordens') 
 
-#cria uma ordem para o cliente
 def new_order(request):
     if request.method == 'POST':
         form = forms.CriaOrdem(request.POST)
@@ -78,6 +87,7 @@ def edit_order(request, id):
 
     
     return render(request, 'ordens/edit_order.html', {
+        'ordem':order,
         'form': form,
         'cliente':client,
         'total':total,
@@ -97,3 +107,112 @@ def delete_order(request, id):
     ordem.delete()
     return redirect('ordens:ordens')
 
+def emitir_nfe_view(request,id):
+    order = get_object_or_404(models.Ordem, pk=id)
+    ordem_itens = order.itens.all()
+    client = order.cliente
+
+    if request.method == 'POST':
+        # Configurações iniciais
+        certificado = "caminho para o certificado.pfx"
+        senha = "senha"
+        # 'True' utilizado para realizar testes !!!IMPORTANTE!!!
+        homologacao = True  
+        # Necessarios para gerar QrCode
+        token = 'seu_token'
+        csc = 'seu_csc' #Código de Segurança do Contribuinte
+
+        # Emitente
+        emitente_data = Emitente(
+            razao_social='NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL',
+            nome_fantasia='Nome Fantasia da Empresa',
+            cnpj='99999999000199',
+            codigo_de_regime_tributario='1',
+            inscricao_estadual='9999999999',
+            inscricao_municipal='12345',
+            cnae_fiscal='9999999',
+            endereco_logradouro='Rua da Paz',
+            endereco_numero='666',
+            endereco_bairro='Dom Aquino',
+            endereco_municipio='Cuiaba',
+            endereco_uf='MT',
+            endereco_cep='87704000',
+            endereco_pais=CODIGO_BRASIL
+        )
+
+        # Cliente
+        cliente_data = Cliente(
+            razao_social= client.nome,
+            tipo_documento='CPF',
+            email='email@email.com',
+            numero_documento=client.cpf,
+            indicador_ie=9,
+            endereco_logradouro=client.endereco,
+            endereco_numero=client.num,
+            endereco_complemento='Ao lado de lugar nenhum',
+            endereco_bairro='client.bairro',
+            endereco_municipio=client.cidade,
+            endereco_uf='DF',
+            endereco_cep='12345123',
+            endereco_pais=CODIGO_BRASIL,
+            endereco_telefone=client.telefone,
+        )
+
+        # Lista de serviços
+        servicos=[]
+        for servico in ordem_itens:
+            servicos.append ({
+                'codigo': '000398',
+                'descricao': 'servico.costureira',
+                'ncm': '99999999',
+                'cfop': '5102',
+                'unidade_comercial': 'UN',
+                'ean': 'SEM GTIN',
+                'ean_tributavel': 'SEM GTIN',
+                'quantidade_comercial': Decimal(servico.preco_total()),
+                'valor_unitario_comercial': Decimal('9.75'),
+                'valor_total_bruto': Decimal('117.00'),
+                'unidade_tributavel': 'UN',
+                'quantidade_tributavel': Decimal('12'),
+                'valor_unitario_tributavel': Decimal('9.75'),
+                'ind_total': 1,
+                'icms_modalidade': '102',
+                'icms_origem': 0,
+                'icms_csosn': '400',
+                'pis_modalidade': '07',
+                'cofins_modalidade': '07',
+                'valor_tributos_aprox': Decimal('21.06')
+            })
+
+        # Chama a função no services.py
+        resposta  = emitir_nfce(certificado, senha, homologacao, token, csc, emitente_data, cliente_data, servicos)
+
+
+        if resposta[0] == 0:
+
+            # XML > string XML
+            xml_str = etree.tostring(resposta[1], encoding="unicode").replace('\n', '').replace('ns0:', '')
+            request.session['xml_autorizado'] = xml_str
+
+            # string XML > DICT > JSON
+            xml_dict = xmltodict.parse(xml_str)  
+            json_data = json.dumps(xml_dict, indent=4)
+
+            return render(request, 'ordens/sucesso.html', {'xml_data': json_data})
+        else:
+            erro = resposta[1].text
+            return render(request, 'ordens/error.html', {'error': erro})
+        
+    return HttpResponse("Método inválido. Use POST para emitir a nota fiscal.", status=405)
+
+def download_nfe(request):
+    # Recupera o XML gerado da sessão
+    xml_autorizado = request.session.get('xml_autorizado', None)
+
+    if xml_autorizado:
+        # Retorna o XML como um arquivo para download
+        response = HttpResponse(xml_autorizado, content_type='application/xml')
+        response['Content-Disposition'] = 'attachment; filename="nota_fiscal.xml"'
+        return response
+    else:
+        return HttpResponse('Erro: XML não encontrado!', status=404)

@@ -1,5 +1,7 @@
 from django.shortcuts import render,get_object_or_404,HttpResponse
 from ordens.models import Ordem
+import subprocess
+import json
 
 
 def dashboard(request):
@@ -13,5 +15,7 @@ def dashboard(request):
         # Se ambos os campos de data foram preenchidos, filtra pelo intervalo de datas
         ordens = ordens.filter(data_entrega__range=[start_date, end_date])
 
-    return render(request, 'dashboard.html',{'ordens':ordens} )
+    # api_path = "C:/xampp/htdocs/testphp/index.php"
+
+    return render(request, 'dashboard.html',{'ordens':ordens,} )
 

@@ -7,9 +7,13 @@
 
 {% block content %}
 <div class='block'>
-    <h1 style="color: white;">Editar Ordem do Cliente "{{cliente.nome}}"</h1>
+    <h1>Editar Ordem do Cliente "{{cliente.nome}}"</h1>
     <div>
         <a class='btn btn-outline-secondary' href="{% url "ordens:ordens" %}">Voltar</a>
+        <form action='{% url "ordens:emitir_nfe" ordem.id %}' method="post" style='display: inline-block;'>
+            {% csrf_token %}
+            <button type='submit' class='btn btn-outline-secondary'>Emitir NF</button>
+        </form>
     </div>
 </div>
 
