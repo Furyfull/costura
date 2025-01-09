@@ -14,7 +14,7 @@ class CriaOrdem(forms.ModelForm):
 class OrdemItemForm(forms.ModelForm):
     class Meta:
         model = models.OrdemItem
-        fields = ['servico', 'quantidade','descricao','costureira']
+        fields = ['servico', 'quantidade','descricao','costureira','comissao']
         widgets = {
             'servico': forms.Select(),
             'descricao': forms.Textarea(attrs={'rows': 4, 'cols': 40, 'placeholder': 'Descrição opcional'}),
@@ -23,4 +23,5 @@ class OrdemItemForm(forms.ModelForm):
             'servico': 'Serviço',
             'quantidade': 'Quantidade',
             'descricao': 'Descrição',
+            'comissao':'Comissão',
         }

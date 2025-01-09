@@ -54,6 +54,7 @@
         <h4 id="valor-total">Valor Total: R$ 0,00</h4>
         
         {{ form.costureira.label }}: {{ form.costureira }}
+        {{form.comissao.label}} (em %):{{form.comissao}}
         {{ form.descricao.label }}: {{ form.descricao }}
 
         <button type="submit">Adicionar Serviço</button>
@@ -70,6 +71,7 @@
                         <th>Quantidade</th>
                         <th>Serviço</th>
                         <th>Costureira</th>
+                        <th>Comissão</th>
                         <th>Descricao</th>
                         <th>Total</th>
                         <th></th>
@@ -81,6 +83,7 @@
                         <td>{{ item.quantidade }} x</td>
                         <td>{{ item.nome }}</td>
                         <td>{{ item.costureira }}</td>
+                        <td>{{ item.comissao }} %</td>
                         <td>
                             {% if item.descricao %}
                                 {{ item.descricao }}

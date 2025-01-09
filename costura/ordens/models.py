@@ -3,6 +3,8 @@ from servicos.models import servicos
 from cliente.models import Cliente
 from costureiras.models import Costureira
 from django.urls import reverse
+from django.core.validators import MinValueValidator, MaxValueValidator
+
 
 STATUS=[
     (0, 'Não Iniciado'),
@@ -30,6 +32,12 @@ class OrdemItem(models.Model):
     ordem = models.ForeignKey(Ordem, related_name='itens', on_delete=models.CASCADE)
     servico = models.ForeignKey(servicos, on_delete=models.CASCADE)
     costureira = models.ForeignKey(Costureira, on_delete=models.CASCADE)
+    comissao = models.PositiveIntegerField(
+        default=5,
+        validators=[
+            MinValueValidator(0),
+            MaxValueValidator(100),
+        ])
     quantidade = models.PositiveIntegerField()
     descricao = models.TextField(blank=True, null=True)  # Comentário opcional
 

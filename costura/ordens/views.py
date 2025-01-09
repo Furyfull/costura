@@ -80,6 +80,7 @@ def edit_order(request, id):
             'preco': item.servico.valor,
             'preco_total': preco_total,
             'costureira': item.costureira,
+            'comissao': item.comissao,
             'quantidade': item.quantidade,
             'descricao' : item.descricao,
             'excluir':item.get_delete_item,
