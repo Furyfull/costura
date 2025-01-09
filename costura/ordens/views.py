@@ -124,68 +124,70 @@ def emitir_nfe_view(request,id):
 
         # Emitente
         emitente_data = Emitente(
-            razao_social='NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL',
-            nome_fantasia='Nome Fantasia da Empresa',
-            cnpj='99999999000199',
-            codigo_de_regime_tributario='1',
-            inscricao_estadual='9999999999',
-            inscricao_municipal='12345',
-            cnae_fiscal='9999999',
-            endereco_logradouro='Rua da Paz',
-            endereco_numero='666',
-            endereco_bairro='Dom Aquino',
-            endereco_municipio='Cuiabá',
-            endereco_uf='MT',
+            razao_social='NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL', #(obrigatorio)
+            cnpj='99999999000199',              #(obrigatorio)
+            inscricao_estadual='9999999999',    #(obrigatorio)
+            cnae_fiscal='9999999', 
+            inscricao_municipal='12345',        
+            codigo_de_regime_tributario='1',    #(obrigatorio)
+            endereco_logradouro='Rua da Paz',   #(obrigatorio)
+            endereco_numero='666',              #(obrigatorio)
+            endereco_bairro='Dom Aquino',       #(obrigatorio)
             endereco_cep='87704000',
-            endereco_pais=CODIGO_BRASIL
+            # endereco_pais=CODIGO_BRASIL,
+            endereco_uf='MT',
+            endereco_municipio='Cuiabá',        #(obrigatorio)
+            endereco_cod_municipio = '3550308', #(obrigatorio)
         )
 
         # Cliente
         cliente_data = Cliente(
-            razao_social= client.nome,
-            tipo_documento='CPF',
+            razao_social= client.nome,          #(obrigatorio)
             email='email@email.com',
-            numero_documento=client.cpf,
-            indicador_ie=9,
-            endereco_logradouro=client.endereco,
-            endereco_numero=client.num,
+            tipo_documento='CPF',               #(obrigatorio)
+            numero_documento=client.cpf,        #(obrigatorio)
+            indicador_ie=9,                     #(obrigatorio)
+
+            endereco_logradouro=client.endereco,    #(obrigatorio)
+            endereco_numero=client.num,             #(obrigatorio)
             endereco_complemento='Ao lado de lugar nenhum',
-            endereco_bairro='client.bairro',
-            endereco_municipio=client.cidade,
-            endereco_uf='DF',
+            endereco_bairro='client.bairro',        #(obrigatorio)
             endereco_cep='12345123',
             endereco_pais=CODIGO_BRASIL,
+            endereco_uf='DF',                       #(obrigatorio)
+            endereco_municipio=client.cidade,       #(obrigatorio)
             endereco_telefone=client.telefone,
         )
 
-        # Lista de serviços
-        servicos=[]
-        for servico in ordem_itens:
-            servicos.append ({
+        # Lista de produto
+        produtos=[]
+        for produto in ordem_itens:
+            produtos.append ({
+                'descricao': 'produto.costureira',
                 'codigo': '000398',
-                'descricao': 'servico.costureira',
-                'ncm': '99999999',
-                'cfop': '5102',
-                'unidade_comercial': 'UN',
                 'ean': 'SEM GTIN',
-                'ean_tributavel': 'SEM GTIN',
-                'quantidade_comercial': Decimal(servico.preco_total()),
+                'ean_unidade_tributavel': 'SEM GTIN',
+                'ncm': '99999999',
+                'unidade_comercial': 'UN',
                 'valor_unitario_comercial': Decimal('9.75'),
-                'valor_total_bruto': Decimal('117.00'),
                 'unidade_tributavel': 'UN',
                 'quantidade_tributavel': Decimal('12'),
                 'valor_unitario_tributavel': Decimal('9.75'),
                 'ind_total': 1,
-                'icms_modalidade': '102',
-                'icms_origem': 0,
+                
+                'valor_tributos_aprox': Decimal('21.06'),
                 'icms_csosn': '400',
-                'pis_modalidade': '07',
-                'cofins_modalidade': '07',
-                'valor_tributos_aprox': Decimal('21.06')
+                'icms_modalidade': '102',
+                'cfop': '5102', 
+                # 'quantidade_comercial': Decimal(produto.preco_total()),
+                # 'valor_total_bruto': Decimal('117.00'),
+                # 'icms_origem': 0,
+                # 'pis_modalidade': '07',
+                # 'cofins_modalidade': '07',
             })
 
         # Chama a função no services.py
-        resposta  = emitir_nfce(certificado, senha, homologacao, token, csc, emitente_data, cliente_data, servicos)
+        resposta  = emitir_nfce(certificado, senha, homologacao, token, csc, emitente_data, cliente_data, produtos)
 
 
         if resposta[0] == 0:
