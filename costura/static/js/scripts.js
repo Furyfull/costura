@@ -5,24 +5,31 @@ function colorEntrega() {
     const diaHoje = hoje.getDate();
     const mesHoje = hoje.getMonth() + 1;
     const anoHoje = hoje.getFullYear().toString().slice(-2);
-    const dataHoje = `${diaHoje}/${mesHoje}/${anoHoje}`;
-    console.log(dataHoje)
+    const dataHojeString = `${diaHoje}/${mesHoje}/${anoHoje}`;
+    console.log(dataHojeString);
+
     // Seleciona todas as células que contêm a data de entrega
     const linhas = document.querySelectorAll('.dataccd');
     linhas.forEach(celula => {
-        const dataEntrega = celula.getAttribute('data-value');
-        console.log(dataEntrega + dataHoje);
+        const dataEntregaString = celula.getAttribute('data-value');
+        console.log(dataEntregaString + dataHojeString);
 
-        // Verifica se a data de entrega é igual à data de hoje
-        if (dataEntrega === dataHoje) {
+        // Converte as datas de strings para objetos Date
+        const [diaEntrega, mesEntrega, anoEntrega] = dataEntregaString.split('/').map(Number);
+        const dataEntrega = new Date(`20${anoEntrega}`, mesEntrega - 1, diaEntrega); // Ajuste do ano para formato completo
+        const dataHoje = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate());
+
+        // Verifica se a data de entrega é igual, anterior ou posterior à data de hoje
+        if (dataEntrega.getTime() === dataHoje.getTime()) {
             celula.style.color = 'blue';
-        } else if (dataEntrega < dataHoje) {
+        } else if (dataEntrega.getTime() < dataHoje.getTime()) {
             celula.style.color = 'red';
         } else {
             celula.style.color = 'green';
         }
-    })
-};
+    });
+}
+
 
 //Page editar ordem
 function atualizarPreco() {
