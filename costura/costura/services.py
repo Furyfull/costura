@@ -7,7 +7,13 @@ from pynfe.utils.flags import CODIGO_BRASIL
 from pynfe.entidades.servico import Servico
 from lxml import etree
 from decimal import Decimal
-import datetime
+from datetime import datetime
+
+from reportlab.lib.pagesizes import letter
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle,Paragraph,Spacer
+from reportlab.lib import colors
+from io import BytesIO
 
 def emitir_nfce(certificado, senha, homologacao, token, csc, emitente_data, cliente_data, produtos):
 
@@ -74,4 +80,61 @@ def emitir_nfce(certificado, senha, homologacao, token, csc, emitente_data, clie
     # Quando for oficial vamos retornar o "envio"
     return 0, nfce  # 0 indicando sucesso
 
-   
+def gerar_servicos_relatorio_pdf(ordem_itens, filtro):
+    styles = getSampleStyleSheet()
+    buffer = BytesIO()
+    doc = SimpleDocTemplate(buffer, pagesize=letter)
+    elementos = []
+    dados = [['Id','Cliente','Serviço', 'Quant.','Descrição', 'Comissão', 'Prazo']]
+    
+    for item in ordem_itens:
+        if not filtro or item.ordem.status != 2:
+            comissao_item = (Decimal(item.comissao) / 150) * item.quantidade * item.preco_total()
+        #  Id -- Cliente -- Serviço -- Quant -- Descrição -- Comissão -- Prazo
+            dados.append([
+                item.ordem.id,
+                Paragraph(item.ordem.cliente.nome, styles['Normal']),
+                Paragraph(item.servico.nome, styles['Normal']),
+                item.quantidade,
+                Paragraph(item.descricao or 'Sem descrição', styles['Normal']),
+                f"R$ {comissao_item:.2f} ({item.comissao}%)",
+                item.ordem.data_entrega.strftime("%d/%m/%Y"),
+            ])
+
+
+    # Adicionar título
+    titulo = Paragraph("Relatório de Serviços", styles['Title'])
+    elementos.append(titulo)
+    elementos.append(Spacer(1, 12))
+
+    # Adicionar comentario
+    comentario = Paragraph(
+        "Este relatório apresenta uma lista detalhada de serviços realizados pelas costureiras, "
+        "incluindo informações sobre a comissão e o valor total."
+        , styles['Normal']
+    )
+    elementos.append(comentario)
+    elementos.append(Spacer(1, 24)) 
+
+    tabela = Table(dados, colWidths=[20, None, None, None, 150, None, None])
+    estilo = TableStyle([
+            ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
+            ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+            ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+            ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+            ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+            ('GRID', (0, 0), (-1, -1), 1, colors.black),
+        ])
+    tabela.setStyle(estilo)
+    elementos.append(tabela)
+
+    # Adicionar data no rodapé
+    data_atual = datetime.now().strftime('%d/%m/%Y')
+    rodape = Paragraph(f"Data de emissão: {data_atual}", styles['Normal'])
+    elementos.append(Spacer(1, 12))  # Espaço antes do rodapé
+    elementos.append(rodape)
+
+    doc.build(elementos)
+    buffer.seek(0)
+
+    return buffer
