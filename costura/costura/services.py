@@ -89,7 +89,7 @@ def gerar_servicos_relatorio_pdf(ordem_itens, filtro):
     
     for item in ordem_itens:
         if not filtro or item.ordem.status != 2:
-            comissao_item = (Decimal(item.comissao) / 150) * item.quantidade * item.preco_total()
+            comissao_item = (Decimal(item.comissao) / 100) * Decimal(item.preco_total)
         #  Id -- Cliente -- Serviço -- Quant -- Descrição -- Comissão -- Prazo
             dados.append([
                 item.ordem.id,
@@ -127,10 +127,10 @@ def gerar_servicos_relatorio_pdf(ordem_itens, filtro):
         ])
     tabela.setStyle(estilo)
     elementos.append(tabela)
-
+    tot = sum(item.preco_total for item in ordem_itens.all())
     # Adicionar data no rodapé
     data_atual = datetime.now().strftime('%d/%m/%Y')
-    rodape = Paragraph(f"Data de emissão: {data_atual}", styles['Normal'])
+    rodape = Paragraph(f"Data de emissão: {data_atual}" f" ({tot})", styles['Normal'])
     elementos.append(Spacer(1, 12))  # Espaço antes do rodapé
     elementos.append(rodape)
 

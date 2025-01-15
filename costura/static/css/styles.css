@@ -3,10 +3,13 @@ body {
     margin: 0;
     padding: 0;
     display: flex;
-    background: linear-gradient(to bottom, #ff7f50 33%, #fff 33%);
+    background: linear-gradient(to bottom, #ff7f50 33vh, #fff 33vh);
     min-height: 100vh;
 }
 
+.alert {
+    display: inline-block;
+}
 
 .top-dir {
     position: absolute;

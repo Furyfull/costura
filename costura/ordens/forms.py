@@ -12,16 +12,20 @@ class CriaOrdem(forms.ModelForm):
         }
 
 class OrdemItemForm(forms.ModelForm):
+
+    
     class Meta:
         model = models.OrdemItem
-        fields = ['servico', 'quantidade','descricao','costureira','comissao']
+        fields = ['servico', 'quantidade','descricao','costureira','comissao','valor_unit']
         widgets = {
             'servico': forms.Select(),
-            'descricao': forms.Textarea(attrs={'rows': 4, 'cols': 40, 'placeholder': 'Descrição opcional'}),
+            'descricao': forms.Textarea(attrs={'rows': 4, 'placeholder': 'Descrição opcional'}),
+            'valor_unit': forms.NumberInput(attrs={'placeholder': 'Digite o valor'}),
         }
         labels = {
             'servico': 'Serviço',
             'quantidade': 'Quantidade',
             'descricao': 'Descrição',
             'comissao':'Comissão',
+            'valor_unit':'Valor do Serviço Especial',
         }

@@ -9,8 +9,8 @@
 <div class='block'>
     <h1>Editar Ordem do Cliente "{{cliente.nome}}"</h1>
     <div>
-        <a class='btn btn-outline-secondary' href="{% url "ordens:ordens" %}">Voltar</a>
-        <form action='{% url "ordens:emitir_nfe" ordem.id %}' method="post" style='display: inline-block;'>
+        <a class='btn btn-outline-secondary' href="{% url 'ordens:ordens' %}">Voltar</a>
+        <form action="{% url 'ordens:emitir_nfe' ordem.id %}" method="post" style='display: inline-block;'>
             {% csrf_token %}
             <button type='submit' class='btn btn-outline-secondary'>Emitir NF</button>
         </form>
@@ -19,11 +19,16 @@
 
 
 {% if messages %}
-    <ul class="alert alert-success">
+    <div class="alert-container">
         {% for message in messages %}
-            {{ message }}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
         {% endfor %}
-    </ul>
+    </div>
 {% endif %}
 
 <div class="card pluss">
@@ -35,30 +40,51 @@
     </div>
     
     
-    
-    <form class='c1' method="post" id='adic' style="display: none;">
-        {% csrf_token %}
+    <div id='adic' style="display: none;">
+        <br>
+        <input type="checkbox" id='sEspecial'>
+        <label for="sEspecial"><b>Serviço Especial</b> </label>
+        <form class='c1' method="post" >
+            {% csrf_token %}
 
-        {{form.servico.label}}:
-        <select id="servico" name="servico">
-            <option value="">Selecione um serviço</option>
-            {% for servico in servicos %}
-                <option value="{{ servico.id }}" data-preco="{{ servico.valor }}">
-                    {{ servico.nome }}
-                </option>
-            {% endfor %}
-        </select>
-        
-        <h4 id="preco">Valor Unitário: R$ 0,00</h4>
-        {{ form.quantidade.label }}: {{ form.quantidade }}
-        <h4 id="valor-total">Valor Total: R$ 0,00</h4>
-        
-        {{ form.costureira.label }}: {{ form.costureira }}
-        {{form.comissao.label}} (em %):{{form.comissao}}
-        {{ form.descricao.label }}: {{ form.descricao }}
+                    <!-- Duas divs aqui é importante -->
+            <!-- para manter a ordem de label acima do input --> 
+            <div id='spc-servi'> 
+                {{form.servico.label}}:
+                <div>
+                    <select id="servico" name="servico">
+                        <option value="">Selecione um serviço</option>
+                        {% for servico in servicos %}
+                            {% if servico.nome != "Especial" %}
+                                <option value="{{ servico.id }}" data-preco="{{ servico.valor }}">
+                                    {{ servico.nome }}
+                                </option>
+                            {% else %}
+                                <option value="{{ servico.id }}" data-preco="{{ servico.valor }}" data-name="{{servico.nome}}">
+                                    {{ servico.nome }}
+                                </option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
 
-        <button type="submit">Adicionar Serviço</button>
-    </form>
+            <!-- Serviço Especial -->
+            <div id="spc-valor" style="display: none;">
+                {{ form.valor_unit.label }}: {{ form.valor_unit }}
+            </div>
+            
+            <h4 id="preco">Valor Unitário: R$ 0,00</h4>
+            {{ form.quantidade.label }}: {{ form.quantidade }}
+            <h4 id="valor-total">Valor Total: R$ 0,00</h4>
+            
+            {{ form.costureira.label }}: {{ form.costureira }}
+            {{form.comissao.label}} (em %):{{form.comissao}}
+            {{ form.descricao.label }}: {{ form.descricao }}
+
+            <button type="submit">Adicionar Serviço</button>
+        </form>
+    </div>
 </div>
 <br>
 <h3 id='ff'>Serviços:</h3>
@@ -81,7 +107,7 @@
                     {% for item in ordem_itens %}
                     <tr>
                         <td>{{ item.quantidade }} x</td>
-                        <td>{{ item.nome }}</td>
+                        <td>{{ item.servico }}</td>
                         <td>{{ item.costureira }}</td>
                         <td>{{ item.comissao }} %</td>
                         <td>
@@ -91,9 +117,9 @@
                                 <p>Sem papo</p>
                             {% endif %}
                         </td>
-                        <td>{{ item.preco_total }}</td>
+                        <td>{{ item.preco_total }} ({{item.valor_unit}})</td>
                         <td>
-                            <a  href="{{ item.excluir }}" 
+                            <a  href="{{ item.get_delete_item  }}" 
                                 class="btn btn-danger"
                                 onclick="return confirm('Tem certeza que deseja excluir este serviço?');"
                                 >
@@ -109,11 +135,36 @@
 {% block js %}
     <script>
         $('#servico')       .change(     function(){ atualizarPreco()    });
+        $('#id_valor_unit')     .on('input', function(){ atualizarPreco()    });
         $('#id_quantidade') .on('input', function(){ atualizarPreco()    });
-        $('.flip')          .click(      function(){ $('#adic').toggle() });
         $(document).ready(function() {
             $('#servico').select2();
             $('#id_costureira').select2();
         });
+        $('.flip').click(function () { $('#adic').toggle(function () {
+                // Verifica se a div está visível
+                if ($('#adic').is(':visible')) {
+                    $('html, body').animate({
+                        scrollTop: $('.pluss').offset().top
+                    }, 500); // Ajuste a duração do scroll em milissegundos
+                }
+            });
+        });
+        $('#sEspecial').change( function(){
+            const opt = pombo("Especial")
+
+            if($(this).is(':checked')){
+                $("#servico option[data-name='Especial']").prop('disabled', false);
+                $('#spc-servi').hide();
+                $('#spc-valor').show();
+                $('#servico').val(opt).trigger('change');
+            } else{
+                $('#servico').val('').trigger('change');
+                $('#spc-valor').hide();
+                $('#spc-servi').show();
+                $("#servico option[data-name='Especial']").prop('disabled', true);
+            }
+        })
+        
     </script>
 {% endblock js %}

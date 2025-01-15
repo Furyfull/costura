@@ -30,6 +30,16 @@ function colorEntrega() {
     });
 }
 
+//Page editar ordem
+function pombo(nome) {
+    const option = $(`#servico option[data-name='${nome}']`);
+    if (option.length) {
+        console.log("Option encontrada:", option.text(), "Valor:", option.val());
+        return option.val()
+    } else {
+        console.log(`Nenhuma opção '${nome}'`);
+    }
+}
 
 //Page editar ordem
 function atualizarPreco() {
@@ -37,10 +47,17 @@ function atualizarPreco() {
     const precoOut = document.getElementById('preco');
     const quantidadeInput = document.getElementById('id_quantidade');
     const totalOut = document.getElementById('valor-total');
+    const inputEspecial = document.getElementById('id_valor_unit');
 
-    // Obtém o preço unitário do produto selecionado (via data-preco)
-    const selectedOption = produtoSelect.options[produtoSelect.selectedIndex];
-    const preco = parseFloat(selectedOption.getAttribute('data-preco')) || 0;
+    let preco
+    if ($('#spc-servi').is(':visible')) {
+        // Obtém o preço unitário do produto selecionado (via data-preco)
+        const selectedOption = produtoSelect.options[produtoSelect.selectedIndex];
+        preco = parseFloat(selectedOption.getAttribute('data-preco')) || 0;
+    } else {
+        preco = parseFloat(inputEspecial.value) || 0;
+    }
+
     const quantidade = parseInt(quantidadeInput.value) || 1;
 
     // Calcula e atualiza o valor total

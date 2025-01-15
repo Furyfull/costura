@@ -23,7 +23,7 @@ class Ordem(models.Model):
         return f"Ordem de {self.cliente} - {self.data_pedido}"
     
     def total(self):
-        return sum(item.quantidade * item.servico.valor for item in self.itens.all())
+        return sum(item.preco_total for item in self.itens.all())
 
     def get_delete_order(self):
         return reverse('ordens:delete_order', kwargs={'id': self.id})
@@ -40,6 +40,10 @@ class OrdemItem(models.Model):
         ])
     quantidade = models.PositiveIntegerField()
     descricao = models.TextField(blank=True, null=True)  # Comentário opcional
+    valor_unit = models.DecimalField(max_digits=10, decimal_places=2,
+                                     blank=True, null=True, 
+                                     validators=[MinValueValidator(0)])
+    preco_total = models.DecimalField(max_digits=10, decimal_places=2) 
 
     def __str__(self):
         return f"{self.quantidade} x {self.servico.nome}"
@@ -47,5 +51,8 @@ class OrdemItem(models.Model):
     def get_delete_item(self):
         return reverse('ordens:delete_order_item', kwargs={'id': self.id})
     
-    def preco_total(self):
-        return self.quantidade * self.servico.valor
+    # Se o preco_total não foi preenchido manualmente, calcula automaticamente
+    def save(self, *args, **kwargs):
+        if not self.preco_total:
+            self.preco_total = self.quantidade * self.valor_unit
+        super().save(*args, **kwargs)

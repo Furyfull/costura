@@ -4,7 +4,9 @@
 <div class='block'>
     <h1>Trabalhos da {{costureira}}</h1>
     <div>
-        <a class='btn btn-outline-secondary' href="{% url "costureiras:relatorio-nc" costureira.id%}">Imprimir todos (não Concluidos)</a>
+        <a class='btn btn-outline-light' href="{% url "costureiras:relatorio-nc" costureira.id%}">
+            Imprimir todos (não Concluidos)
+        </a>
     </div>
 </div>
     {% if servicos%}
@@ -30,7 +32,7 @@
                     <td>{{serv.servico}} </td>
                     <td>{{serv.ordem.get_status_display}} </td>
                     <td> 
-                        <a class='btn btn-outline-dark' href="{% url "ordens:edit_order" serv.ordem.id %}">Ordem</a>
+                        <a class='btn btn-outline-primary' href="{% url "ordens:edit_order" serv.ordem.id %}">Ordem</a>
                         <a class='btn btn-outline-dark' href="{% url "costureiras:relatorio" serv.ordem.id costureira.id%}">Relatório (pdf)</a>
                     </td>
                 </tr>

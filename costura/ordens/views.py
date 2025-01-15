@@ -48,19 +48,33 @@ def new_order(request):
     return render(request, 'ordens/new_order.html', {'form': form})
 
 def edit_order(request, id):
+    servico_especial, criado = models.servicos.objects.get_or_create(nome="Especial", defaults={'valor': 0})
     order = get_object_or_404(models.Ordem, pk=id)
     services = servicos.objects.all()
     client = order.cliente
-    #adicionando 1 item/servico a ordem de cada vez
+
     if request.method == "POST":
         form = forms.OrdemItemForm(request.POST)
         if form.is_valid():
             ordem_item = form.save(commit=False)
             ordem_item.ordem = order
-            # Isso é oq vai ser salvo no db
+            if ordem_item.servico.nome != "Especial":
+                ordem_item.valor_unit = ordem_item.servico.valor
             ordem_item.save()
-            messages.success(request, "Serviço Adicionado !!!")
+
+            # input_values = {key: request.POST.get(key) for key in request.POST.keys()}
+            messages.success(request, f"Serviço Adicionado !!!")
             return HttpResponseRedirect(request.path)
+        else:
+            # Exibindo erros
+            error_messages = []
+            for field, errors in form.errors.items():
+                for error in errors:
+                    error_messages.append(f"{field}: {error}")
+            messages.warning(
+                request,
+                f"Falha ao Adicionar o Serviço. Error: {', '.join(error_messages)}"
+            )
     else:
         form = forms.OrdemItemForm()
 
@@ -68,33 +82,14 @@ def edit_order(request, id):
     total = order.total()
     # comando .itens vem do models (related_name='itens')
     ordem_itens = order.itens.all()
-    # notar q aqui é "ordem_itens" e no if é "ordem_item"
-    # fazendo calculos
-    ordem_itens_com_totais = []
-    for item in ordem_itens:
-        preco_total = item.quantidade * item.servico.valor
-        # Isso é oq vai ser mostrado no html
-        ordem_itens_com_totais.append({
-            'id': item.id,
-            'nome': item.servico.nome,
-            'preco': item.servico.valor,
-            'preco_total': preco_total,
-            'costureira': item.costureira,
-            'comissao': item.comissao,
-            'quantidade': item.quantidade,
-            'descricao' : item.descricao,
-            'excluir':item.get_delete_item,
-        })
-
     
     return render(request, 'ordens/edit_order.html', {
         'ordem':order,
         'form': form,
         'cliente':client,
         'total':total,
-        'ordem_itens': ordem_itens_com_totais,
+        'ordem_itens': ordem_itens,
         'servicos':services,
-
         })
 
 def delete_order_item(request, id):
